@@ -1,0 +1,12 @@
+flask
+pyyaml
+openai-whisper
+yt-dlp
+nltk
+ffmpeg-python
+pillow
+TTS
+moviepy
+python-dotenv
+numpy
+torch

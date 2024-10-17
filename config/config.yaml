@@ -1,0 +1,17 @@
+paths:
+  background_images: 'static/background_images'
+  faces: 'static/faces'
+  font: 'static/fonts/1728400276-LondrinaSolid-Black.ttf'
+  thumbnails: 'static/thumbnails'
+  translations: 'static/translations'
+  output: 'static/output'
+
+tts:
+  model_path: 'path/to/xtts/model'
+
+video:
+  width: 1920
+  height: 1080
+  fps: 30
+
+language: 'German'
