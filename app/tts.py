@@ -79,7 +79,7 @@ def generate_tts(text, language):
     
     current_process = "Enhancing audio"
     progress = 70
-    enhance_audio_file(output_audio)
+    # enhance_audio_file(output_audio)
 
     current_process = "Audio generation and enhancement complete"
     progress = 100
@@ -151,7 +151,7 @@ def get_duration(file_path):
 def split_text_for_tts(text, max_chars=220):
     # Split text into segments based on commas and full stops
     # The regex will split at commas and periods, keeping the punctuation with the sentence
-    sentences = re.split(r'(?<=[,.])\s+', text)
+    sentences = re.split(r'(?<=[.!?])\s+', text)
 
     chunks = []
     current_chunk = ""

@@ -1,10 +1,12 @@
 paths:
   background_images: 'static/background_images'
+  background_videos: 'static/video_chunks'
   faces: 'static/faces'
   font: 'static/fonts/1728400276-LondrinaSolid-Black.ttf'
   thumbnails: 'static/thumbnails'
   translations: 'static/translations'
   output: 'static/output'
+  
 
 tts:
   model_path: 'path/to/xtts/model'
