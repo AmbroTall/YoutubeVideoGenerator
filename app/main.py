@@ -1,5 +1,5 @@
 from flask import Flask,Blueprint, render_template, request, send_file,url_for, send_from_directory
-import transcribe, text_processing, tts, video_generation, translation
+import transcribe, text_processing, tts, video_generation, translation,thumbnail_generation 
 import yaml
 import os
 
@@ -35,6 +35,9 @@ def index():
         
         # Step 3: Generate TTS
         audio_files,audio_durations,chunks = tts.generate_tts(translated_text,lang)
+
+        #generate Thumbnail
+        thumbnail = thumbnail_generation.main(youtube_url)
         
         # Step 4: Generate video
         video_file = video_generation.generate_video(audio_files,audio_durations,translated_text,chunks , config, lang, k)

@@ -438,34 +438,34 @@ def adjust_lines_for_consistency(lines, font, max_width):
     
     return adjusted_lines
 
-# def main():
-#     video_url = input("Enter the YouTube video URL: ")
+def main(video_url):
+    # video_url = input("Enter the YouTube video URL: ")
     
-#     thumbnail = get_youtube_thumbnail(video_url)
-#     if thumbnail is None:
-#         print("Failed to fetch thumbnail. Exiting.")
-#         return
+    thumbnail = get_youtube_thumbnail(video_url)
+    if thumbnail is None:
+        print("Failed to fetch thumbnail. Exiting.")
+        return
 
-#     print("Thumbnail fetched successfully. Extracting text...")
-#     extracted_text = extract_text_from_image(thumbnail)
+    print("Thumbnail fetched successfully. Extracting text...")
+    extracted_text = extract_text_from_image(thumbnail)
     
-#     if not extracted_text:
-#         print("No text extracted from the thumbnail. Using default text.")
-#         extracted_text = "AMAZING AI\nDISCOVERY"
-#     else:
-#         print(f"Extracted text: {extracted_text}")
+    if not extracted_text:
+        print("No text extracted from the thumbnail. Using default text.")
+        extracted_text = "AMAZING AI\nDISCOVERY"
+    else:
+        print(f"Extracted text: {extracted_text}")
 
-#     lang = "en"
-#     k = "001"
+    lang = "en"
+    k = "001"
     
-#     try:
-#         thumbnail_path = generate_thumbnail(extracted_text, lang, k, config, {})
-#         if thumbnail_path:
-#             print(f"New thumbnail generated: {thumbnail_path}")
-#         else:
-#             print("Failed to generate thumbnail.")
-#     except Exception as e:
-#         print(f"An error occurred during thumbnail generation: {e}")
+    try:
+        thumbnail_path = generate_thumbnail(extracted_text, lang, k, config, {})
+        if thumbnail_path:
+            print(f"New thumbnail generated: {thumbnail_path}")
+        else:
+            print("Failed to generate thumbnail.")
+    except Exception as e:
+        print(f"An error occurred during thumbnail generation: {e}")
 
 # if __name__ == "__main__":
 #     main()

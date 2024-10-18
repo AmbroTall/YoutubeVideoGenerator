@@ -3,12 +3,12 @@ import re
 import numpy as np
 import time
 import random
-from moviepy.editor import ImageClip, AudioFileClip, CompositeVideoClip, TextClip, concatenate_audioclips, concatenate_videoclips
+from moviepy.editor import ImageClip, AudioFileClip, CompositeVideoClip,VideoFileClip, TextClip, concatenate_audioclips, concatenate_videoclips
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 import re
 import ffmpeg
 import shutil
-from thumbnail_generation import generate_thumbnail
+from thumbnail_generation import generate_thumbnail,main
 import subprocess
 from moviepy.config import change_settings
 # Set the correct path to the ImageMagick binary
@@ -17,7 +17,7 @@ change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
 
 def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
     # Generate thumbnail
-    thumbnail_path = generate_thumbnail(chunk[:100], lang, k, config,{})  # Use first 100 chars for thumbnail
+    # thumbnail_path = generate_thumbnail(chunk[:100], lang, k, config,{})  # Use first 100 chars for thumbnail
     
     # Load audio clips
     audio_clips = [AudioFileClip(audio_file) for audio_file in audio_files]
@@ -40,12 +40,20 @@ def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
         print("Audio concatenation successful!")
     
     # Get a random background image
-    background_folder = config['paths']['background_images']
-    background_image = random.choice(os.listdir(background_folder))
-    background_path = os.path.join(background_folder, background_image)
+    # background_folder = config['paths']['background_videos']
+    # background_image = random.choice(os.listdir(background_folder))
+    # background_path = os.path.join(background_folder, background_image)
     
-    # Create video clip from the background image
-    video = ImageClip(background_path).set_duration(full_audio.duration)
+    # # Create video clip from the background image
+    # video = ImageClip(background_path).set_duration(full_audio.duration)
+
+    background_folder = config['paths']['background_videos']  # Update this path to point to your video folder
+    background_video_file = random.choice(os.listdir(background_folder))
+    background_path = os.path.join(background_folder, background_video_file)
+    
+    # Create video clip from the background video
+    video = VideoFileClip(background_path).subclip(0, full_audio.duration)  # Ensure the duration matches the audio
+    
     
     # Add subtitles
     subtitles = create_subtitles(chunks, video.w, video.h, audio_durations)
