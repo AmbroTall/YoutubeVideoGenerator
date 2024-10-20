@@ -7,16 +7,26 @@ import os
 app = Flask(__name__)
 
 os.environ["COQUI_TOS_AGREED"] = "1"
-# Load configuration
-with open('../config/config.yaml', 'r') as config_file:
+
+base_dir = os.path.dirname(os.path.dirname(__file__))  # Base directory of the app
+config_dir = os.path.join(base_dir, 'config')
+app_dir = os.path.join(base_dir, 'app')
+
+# Open the config.yaml file using the absolute path
+with open(os.path.join(config_dir, 'config.yaml'), 'r') as config_file:
     config = yaml.safe_load(config_file)
+# Load configuration
+# with open('../config/config.yaml', 'r') as config_file:
+#     config = yaml.safe_load(config_file)
 
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    videos = os.listdir('static/output')
-    images = os.listdir('static/thumbnails')
+    videos_dir = os.path.join(app_dir, 'static', 'output') 
+    images_dir = os.path.join(app_dir, 'static', 'thumbnails')
+    videos = os.listdir(videos_dir)
+    images = os.listdir(images_dir)
     if request.method == 'POST':
         youtube_url = request.form['youtube_url']
         lang = request.form['language']
@@ -36,10 +46,10 @@ def index():
         # Step 3: Generate TTS
         audio_files,audio_durations,chunks = tts.generate_tts(translated_text,lang)
 
-        #generate Thumbnail
-        thumbnail = thumbnail_generation.main(youtube_url)
+        # Step 4: generate Thumbnail
+        thumbnail = thumbnail_generation.main(youtube_url, lang)
         
-        # Step 4: Generate video
+        # Step 5: Generate video
         video_file = video_generation.generate_video(audio_files,audio_durations,translated_text,chunks , config, lang, k)
         
         return render_template('index.html', videos=videos,images=images)
@@ -55,4 +65,4 @@ def serve_image(filename):
     return send_from_directory(os.path.join('static/thumbnails'), filename, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(host='::', port=5500, debug=True)
+    app.run(host='0.0.0.0', port=5500, debug=True)

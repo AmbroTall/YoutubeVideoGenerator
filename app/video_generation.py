@@ -86,7 +86,7 @@ def create_subtitles(chunks, video_w, video_h, sentence_durations):
         print(f"Adding subtitle: {chunk} (duration: {duration}s, start: {start_time}s)")
         
         # Create a TextClip for each subtitle line
-        txt_clip = TextClip(chunk, fontsize=26, color='white', bg_color='none', method='caption')
+        txt_clip = TextClip(chunk, fontsize=36, color='white', bg_color='none', method='caption', size=(600, None))
 
         # Set the start time and duration for each line
         txt_clip = txt_clip.set_duration(duration).set_position(('center', 'center')).set_start(start_time)

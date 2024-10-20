@@ -12,10 +12,17 @@ import logging
 import statistics
 import textwrap
 import math
+import translation
 
-# Load configuration
-with open('../config/config.yaml', 'r') as config_file:
+# Get the absolute path to the config directory
+config_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config')
+
+# Open the config.yaml file using the absolute path
+with open(os.path.join(config_dir, 'config.yaml'), 'r') as config_file:
     config = yaml.safe_load(config_file)
+# Load configuration
+# with open('../config/config.yaml', 'r') as config_file:
+#     config = yaml.safe_load(config_file)
 
 print("Loaded configuration:")
 print(yaml.dump(config))
@@ -438,7 +445,7 @@ def adjust_lines_for_consistency(lines, font, max_width):
     
     return adjusted_lines
 
-def main(video_url):
+def main(video_url,lang):
     # video_url = input("Enter the YouTube video URL: ")
     
     thumbnail = get_youtube_thumbnail(video_url)
@@ -448,6 +455,9 @@ def main(video_url):
 
     print("Thumbnail fetched successfully. Extracting text...")
     extracted_text = extract_text_from_image(thumbnail)
+
+    translated_extracted_text = translation.translate_chunk(extracted_text,lang)
+    print('translated_extracted_text',translated_extracted_text)
     
     if not extracted_text:
         print("No text extracted from the thumbnail. Using default text.")
@@ -455,11 +465,11 @@ def main(video_url):
     else:
         print(f"Extracted text: {extracted_text}")
 
-    lang = "en"
+
     k = "001"
     
     try:
-        thumbnail_path = generate_thumbnail(extracted_text, lang, k, config, {})
+        thumbnail_path = generate_thumbnail(translated_extracted_text, lang, k, config, {})
         if thumbnail_path:
             print(f"New thumbnail generated: {thumbnail_path}")
         else:
@@ -467,8 +477,7 @@ def main(video_url):
     except Exception as e:
         print(f"An error occurred during thumbnail generation: {e}")
 
-# if __name__ == "__main__":
-#     main()
+
 
 
 

@@ -178,33 +178,3 @@ def split_text_for_tts(text, max_chars=220):
 
 
 
-# def generate_tts(text, output_folder="output_audio"):
-#     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
-#     os.makedirs(output_folder, exist_ok=True)
-    
-#     chunks = split_text_for_tts(text)
-#     audio_files = []
-    
-#     for i, chunk in enumerate(chunks):
-#         output_file = os.path.join(output_folder, f"chunk_{i}.wav")
-#         tts.tts_to_file(text=chunk, file_path=output_file, speaker='speaker')
-#         audio_files.append(output_file)
-    
-#     return audio_files
-
-# def split_text_for_tts(text, max_chars=220):
-#     words = text.split()
-#     chunks = []
-#     current_chunk = ""
-    
-#     for word in words:
-#         if len(current_chunk) + len(word) + 1 <= max_chars:
-#             current_chunk += " " + word if current_chunk else word
-#         else:
-#             chunks.append(current_chunk)
-#             current_chunk = word
-    
-#     if current_chunk:
-#         chunks.append(current_chunk)
-    
-#     return chunks
