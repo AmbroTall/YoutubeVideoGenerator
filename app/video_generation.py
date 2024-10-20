@@ -40,23 +40,51 @@ def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
         print("Audio concatenation successful!")
     
     # Get a random background image
-    # background_folder = config['paths']['background_videos']
+    background_folder = config['paths']['background_videos']
     # background_image = random.choice(os.listdir(background_folder))
     # background_path = os.path.join(background_folder, background_image)
     
     # # Create video clip from the background image
     # video = ImageClip(background_path).set_duration(full_audio.duration)
 
-    background_folder = config['paths']['background_videos']  # Update this path to point to your video folder
-    background_video_file = random.choice(os.listdir(background_folder))
-    background_path = os.path.join(background_folder, background_video_file)
+    # background_folder = config['paths']['background_videos']  # Update this path to point to your video folder
+    # background_video_file = random.choice(os.listdir(background_folder))
+    # background_path = os.path.join(background_folder, background_video_file)
     
-    # Create video clip from the background video
-    video = VideoFileClip(background_path).subclip(0, full_audio.duration)  # Ensure the duration matches the audio
+    # # Create video clip from the background video
+    # video = VideoFileClip(background_path).subclip(0, full_audio.duration)  # Ensure the duration matches the audio
     
     
-    # Add subtitles
-    subtitles = create_subtitles(chunks, video.w, video.h, audio_durations)
+    # # Add subtitles
+    # subtitles = create_subtitles(chunks, video.w, video.h, audio_durations)
+
+
+    # Get a list of all video files in the background folder
+    background_videos = [os.path.join(background_folder, file) for file in os.listdir(background_folder) if file.endswith(('.mp4', '.avi', '.mov'))]
+
+    # List to hold selected video clips
+    selected_clips = []
+
+    # Loop to select random video clips
+    for _ in range(3):  # Replace 'num_clips' with the number of clips you want to select
+        background_video_file = random.choice(background_videos)
+        video = VideoFileClip(background_video_file)
+        
+        # Determine the maximum duration for the clip (can be set as desired)
+        max_clip_duration = min(video.duration, full_audio.duration)  # Ensure it does not exceed the audio duration
+        
+        # Randomly select a start time for the clip
+        if max_clip_duration > 0:
+            start_time = random.uniform(0, video.duration - max_clip_duration)
+            clip = video.subclip(start_time, start_time + max_clip_duration)
+            selected_clips.append(clip)
+
+    # Combine all selected clips into one final video
+    final_video = concatenate_videoclips(selected_clips)
+
+    # Add subtitles (assuming create_subtitles is defined)
+    subtitles = create_subtitles(chunks, final_video.w, final_video.h, audio_durations)
+
     
     # Combine video and subtitles
     final_video = CompositeVideoClip([video] + subtitles)
@@ -86,7 +114,7 @@ def create_subtitles(chunks, video_w, video_h, sentence_durations):
         print(f"Adding subtitle: {chunk} (duration: {duration}s, start: {start_time}s)")
         
         # Create a TextClip for each subtitle line
-        txt_clip = TextClip(chunk, fontsize=36, color='white', bg_color='none', method='caption', size=(600, None))
+        txt_clip = TextClip(chunk, fontsize=46, color='white', bg_color='none', method='caption', size=(800, None))
 
         # Set the start time and duration for each line
         txt_clip = txt_clip.set_duration(duration).set_position(('center', 'center')).set_start(start_time)
