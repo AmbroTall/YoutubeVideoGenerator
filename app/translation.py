@@ -151,7 +151,7 @@ def process_chunks(chunks):
         print('original length', len(chunk))
         # new_chunk = paraphrase_segment(chunk) + '\n'
         # print('new chunk', chunk)
-        new_chunk_list = gpt_response_to_chunks(chunk, '#new')
+        new_chunk_list = gpt_response_to_chunks(chunk, '#text')
         for t in new_chunk_list:
             new_text += t + '\n'
     return new_text

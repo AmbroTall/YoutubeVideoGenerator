@@ -1,31 +1,69 @@
-# Use an official Python runtime as the base image
-FROM python:3.9-slim
+# Use an Ubuntu base image
+FROM --platform=linux/amd64 ubuntu:20.04
 
-# Set the working directory in the container
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
 WORKDIR /app
-
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install the required packages
-RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m nltk.downloader punkt_tab
-RUN apt-get install imagemagick
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    ffmpeg \
+    git \
+    curl \
+    build-essential \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    llvm \
+    libncurses5-dev \
+    libncursesw5-dev \
+    xz-utils \
+    tk-dev \
+    libffi-dev \
+    liblzma-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of the application code into the container
-COPY . .
+# Install Git LFS
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
 
-# Set environment variables
-ENV FLASK_APP=app
-ENV FLASK_RUN_HOST=0.0.0.0
+# Install pyenv
+RUN curl https://pyenv.run | bash
+ENV PYENV_ROOT /root/.pyenv
+ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
-# Expose the port the app runs on
-EXPOSE 5000
+# Install Python 3.11
+RUN pyenv install 3.9
+RUN pyenv global 3.9
 
-# Run the application
-CMD ["flask", "run"]
+# Create virtual environment
+RUN pyenv virtualenv 3.9 env
+
+# Upgrade pip to the latest version
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install --upgrade pip"
+
+# Copy requirements files
+COPY requirements.txt ./
+
+# Install dependencies (use compatible versions)
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install -r requirements.txt"
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Expose port 5000 for the Flask app
+EXPOSE 5500
+
+# Run the Flask app
+CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && python3 app/main.py"]
