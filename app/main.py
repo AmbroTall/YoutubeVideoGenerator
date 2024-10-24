@@ -65,4 +65,4 @@ def serve_image(filename):
     return send_from_directory(os.path.join('static/thumbnails'), filename, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500, debug=True)
+    app.run(host='::', port=5500, debug=True)
