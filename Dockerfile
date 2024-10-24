@@ -31,6 +31,9 @@ RUN apt-get update && apt-get install -y \
     liblzma-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# install ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
+
 # Install Git LFS
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
 
