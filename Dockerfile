@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM --platform=linux/amd64 ubuntu:20.04
+FROM ubuntu:20.04
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+
 
 # Set work directory
 WORKDIR /app
@@ -57,12 +58,33 @@ COPY requirements.txt ./
 # Install dependencies (use compatible versions)
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install -r requirements.txt"
 
-# install ffmpeg
+# Download all NLTK data to a central location (/usr/share/nltk_data)
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python3 -m nltk.downloader -d /usr/share/nltk_data all"
+
+# Install cors
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install flask-cors"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install --upgrade Pillow"
+
+# Install ImageMagick
+RUN apt-get install -y imagemagick 
+
+# Set ffmpeg location (optional if installed in a standard path)
+ENV FFMPEG_PATH="/usr/bin/ffmpeg"
+ENV NLTK_DATA="/usr/share/nltk_data"
+
+# After installing ImageMagick
+RUN echo '<policymap>' > /etc/ImageMagick-6/policy.xml && \
+    echo '  <policy domain="coder" rights="read|write" pattern="PDF" />' >> /etc/ImageMagick-6/policy.xml && \
+    echo '  <policy domain="coder" rights="read|write" pattern="EPS" />' >> /etc/ImageMagick-6/policy.xml && \
+    echo '  <policy domain="coder" rights="read|write" pattern="SVG" />' >> /etc/ImageMagick-6/policy.xml && \
+    echo '</policymap>' >> /etc/ImageMagick-6/policy.xml
+ENV IMAGEMAGICK_BINARY="/usr/bin/convert"
+
 RUN apt-get update && apt-get install -y ffmpeg
 
+RUN which ffmpeg
 # Copy the current directory contents into the container at /app
 COPY . /app
-
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
