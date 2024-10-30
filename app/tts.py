@@ -134,15 +134,32 @@ def enhance_audio_file(input_dir):
     print(f"Contents of output directory after enhancement: {os.listdir(input_dir)}")
 
 
-def get_duration(file_path):
-    try:
-        # Probe the MP3 file to get information
-        probe = None
-        probe = ffmpeg.probe(file_path, v="error", select_streams="a:0", show_entries="format=duration")
+# def get_duration(file_path):
+#     try:
+#         # Probe the MP3 file to get information
+#         probe = None
+#         probe = ffmpeg.probe(file_path, v="error", select_streams="a:0", show_entries="format=duration")
 
-        # Extract the duration from the probe result
-        audio_duration = float(probe["format"]["duration"])
+#         # Extract the duration from the probe result
+#         audio_duration = float(probe["format"]["duration"])
+#         print('audio duration :', audio_duration)
+#         return audio_duration
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return None
+def get_duration(file_path):
+    """Get the duration of an audio or video file using ffprobe."""
+    try:
+        # Command to get the duration
+        cmd = f'ffprobe -i "{file_path}" -show_entries format=duration -v quiet -of csv="p=0"'
+        
+        # Execute the command
+        output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+        
+        # Decode the output to a string and convert to float
+        audio_duration = float(output.decode().strip())
         print('audio duration :', audio_duration)
+        
         return audio_duration
     except Exception as e:
         print(f"Error: {e}")
