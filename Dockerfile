@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
 
 # Set work directory
 WORKDIR /app
@@ -30,9 +29,13 @@ RUN apt-get update && apt-get install -y \
     tk-dev \
     libffi-dev \
     liblzma-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    libfreetype6-dev \
+    imagemagick \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
-
-
 
 # Install Git LFS
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
@@ -42,7 +45,7 @@ RUN curl https://pyenv.run | bash
 ENV PYENV_ROOT /root/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
-# Install Python 3.11
+# Install Python 3.9
 RUN pyenv install 3.9
 RUN pyenv global 3.9
 
@@ -50,29 +53,26 @@ RUN pyenv global 3.9
 RUN pyenv virtualenv 3.9 env
 
 # Upgrade pip to the latest version
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install --upgrade pip"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pip"
 
 # Copy requirements files
 COPY requirements.txt ./
 
 # Install dependencies (use compatible versions)
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install -r requirements.txt"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install -r requirements.txt"
 
 # Download all NLTK data to a central location (/usr/share/nltk_data)
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python3 -m nltk.downloader -d /usr/share/nltk_data all"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python -m nltk.downloader -d /usr/share/nltk_data all"
 
-# Install cors
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install flask-cors"
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip3 install --upgrade Pillow"
-
-# Install ImageMagick
-RUN apt-get install -y imagemagick 
+# Install additional Python packages
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install flask-cors && pip uninstall --yes python-ffmpeg && pip install ffmpeg-python"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade Pillow"
 
 # Set ffmpeg location (optional if installed in a standard path)
 ENV FFMPEG_PATH="/usr/bin/ffmpeg"
 ENV NLTK_DATA="/usr/share/nltk_data"
 
-# After installing ImageMagick
+# Configure ImageMagick policies
 RUN echo '<policymap>' > /etc/ImageMagick-6/policy.xml && \
     echo '  <policy domain="coder" rights="read|write" pattern="PDF" />' >> /etc/ImageMagick-6/policy.xml && \
     echo '  <policy domain="coder" rights="read|write" pattern="EPS" />' >> /etc/ImageMagick-6/policy.xml && \
@@ -80,17 +80,14 @@ RUN echo '<policymap>' > /etc/ImageMagick-6/policy.xml && \
     echo '</policymap>' >> /etc/ImageMagick-6/policy.xml
 ENV IMAGEMAGICK_BINARY="/usr/bin/convert"
 
-RUN apt-get update && apt-get install -y ffmpeg
-
-RUN which ffmpeg
 # Copy the current directory contents into the container at /app
 COPY . /app
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
-# Expose port 5000 for the Flask app
+# Expose port 5500 for the Flask app
 EXPOSE 5500
 
 # Run the Flask app
-CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && python3 app/main.py"]
+CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin
