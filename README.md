@@ -89,7 +89,7 @@ Adjust the `config.yaml` file to customize various aspects of the video generati
 To run the application in a Docker container:
 
 1. Build the Docker image: `docker build -t youtube-video-generator .`
-2. Run the container: `docker run -p 5000:5000 youtube-video-generator`
+2. Run the container: `docker run -p 5500:5500 youtube-video-generator`
 
 ## Testing
 
