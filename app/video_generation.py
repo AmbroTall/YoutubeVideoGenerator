@@ -58,36 +58,50 @@ def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
     # # Add subtitles
     # subtitles = create_subtitles(chunks, video.w, video.h, audio_durations)
 
-
-    # Get a list of all video files in the background folder
+   # Get a list of all video files in the background folder
+    background_folder = config['paths']['background_videos']
     background_videos = [os.path.join(background_folder, file) for file in os.listdir(background_folder) if file.endswith(('.mp4', '.avi', '.mov'))]
+    
+    if not background_videos:
+        raise ValueError("No video files found in the background folder.")
 
     # List to hold selected video clips
     selected_clips = []
 
-    # Loop to select random video clips
-    for _ in range(3):  # Replace 'num_clips' with the number of clips you want to select
+    # Select a few background video clips
+    min_clips = 2
+    num_clips = random.randint(min_clips, len(background_videos))
+
+    for _ in range(num_clips):
         background_video_file = random.choice(background_videos)
         video = VideoFileClip(background_video_file)
-        
-        # Determine the maximum duration for the clip (can be set as desired)
-        max_clip_duration = min(video.duration, full_audio.duration)  # Ensure it does not exceed the audio duration
-        
-        # Randomly select a start time for the clip
-        if max_clip_duration > 0:
-            start_time = random.uniform(0, video.duration - max_clip_duration)
-            clip = video.subclip(start_time, start_time + max_clip_duration)
-            selected_clips.append(clip)
+        selected_clips.append(video)
 
-    # Combine all selected clips into one final video
-    final_video = concatenate_videoclips(selected_clips)
+    # Prepare to loop selected clips
+    final_clips = []
+    total_duration = 0
+    desired_duration = full_audio.duration
+
+    # Loop through the selected clips until the total duration meets or exceeds the desired duration
+    while total_duration < desired_duration:
+        for clip in selected_clips:
+            final_clips.append(clip)
+            total_duration += clip.duration
+            if total_duration >= desired_duration:
+                break
+
+    # Combine all final clips into one final video
+    final_video = concatenate_videoclips(final_clips)
+
+    # Debugging: Check the duration of the final video
+    print(f"Final video duration: {final_video.duration} seconds")
 
     # Add subtitles (assuming create_subtitles is defined)
     subtitles = create_subtitles(chunks, final_video.w, final_video.h, audio_durations)
 
     
     # Combine video and subtitles
-    final_video = CompositeVideoClip([video] + subtitles)
+    final_video = CompositeVideoClip([final_video] + subtitles)
     
     # Set audio
     final_video = final_video.set_audio(full_audio)

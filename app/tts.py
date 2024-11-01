@@ -79,7 +79,7 @@ def generate_tts(text, language):
     
     current_process = "Enhancing audio"
     progress = 70
-    # enhance_audio_file(output_audio)
+    enhance_audio_file(output_audio)
 
     current_process = "Audio generation and enhancement complete"
     progress = 100

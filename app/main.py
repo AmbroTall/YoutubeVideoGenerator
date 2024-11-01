@@ -34,22 +34,23 @@ def index():
         
         # Step 1: Transcribe
         transcript = transcribe.transcribe_youtube_video(youtube_url)
-        
-        # Step 2: Process text
+        # with open('transcript', 'r') as file:
+        #   transcript = file.read() 
+        # # Step 2: Process text
         processed_text = text_processing.process_text(transcript)
 
         text = translation.paraphrase(processed_text)
 
-        # Step 3: Translate Text
+        # # Step 3: Translate Text
         translated_text = translation.translate_text(text,lang,config)
-        
-        # Step 3: Generate TTS
+      
+        # # Step 3: Generate TTS
         audio_files,audio_durations,chunks = tts.generate_tts(translated_text,lang)
 
-        # Step 4: generate Thumbnail
+        # # Step 4: generate Thumbnail
         thumbnail = thumbnail_generation.main(youtube_url, lang)
         
-        # Step 5: Generate video
+        # # Step 5: Generate video
         video_file = video_generation.generate_video(audio_files,audio_durations,translated_text,chunks , config, lang, k)
         
         return render_template('index.html', videos=videos,images=images)
@@ -65,4 +66,4 @@ def serve_image(filename):
     return send_from_directory(os.path.join('static/thumbnails'), filename, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500, debug=True)
+    app.run(host='::', port=5500, debug=True)
