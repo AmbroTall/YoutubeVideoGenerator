@@ -158,11 +158,11 @@ def process_chunks(chunks):
 
 
 def paraphrase(text):
-    story = extract_story(text)
-    print('story',story)
+    # story = extract_story(text)
     # idea = extract_idea(story)
-    chunks = split_text_into_sentence_chunks(story, 2500)
+    chunks = split_text_into_sentence_chunks(text, 2500)
     new_text = process_chunks(chunks)
+    print('story',new_text)
     return new_text
 
 

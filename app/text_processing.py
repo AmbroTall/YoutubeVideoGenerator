@@ -41,6 +41,7 @@ def expand_abbreviations(text):
     return text
 
 def process_text(text):
+    # print('transcript',text)
     text = remove_commas(text)
     text = expand_abbreviations(text)
     
