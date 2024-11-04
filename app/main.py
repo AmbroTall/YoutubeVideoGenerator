@@ -33,9 +33,9 @@ def index():
         k = request.form['video_number']
         
         # Step 1: Transcribe
-        transcript = transcribe.transcribe_youtube_video(youtube_url)
-        # with open('transcript', 'r') as file:
-        #   transcript = file.read() 
+        # transcript = transcribe.transcribe_youtube_video(youtube_url)
+        with open('transcript', 'r') as file:
+          transcript = file.read() 
         # # Step 2: Process text
         processed_text = text_processing.process_text(transcript)
 
