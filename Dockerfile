@@ -91,8 +91,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install additional Python packages
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip uninstall -y TTS && pip install coqui-tts"
 # Copy the current directory contents into the container at /app
 COPY . /app
 
