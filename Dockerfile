@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM --platform=linux/amd64 ubuntu:20.04
+FROM nvidia/cuda:11.8.0-runtime-ubuntu20.04
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
