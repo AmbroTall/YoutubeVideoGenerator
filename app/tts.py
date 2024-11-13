@@ -1,6 +1,7 @@
 import os
 from TTS.api import TTS
 import ffmpeg
+import json
 import threading
 import subprocess
 import shutil
@@ -9,10 +10,18 @@ import re
 # Global variables
 progress = 0
 current_process = ""
-reference_files = ["reference1.mp3", "reference2.mp3", "reference3.mp3"]
+# reference_files = ["reference1.mp3", "reference2.mp3", "reference3.mp3"]
+# Set the absolute path for the reference_audio directory
+base_dir = os.path.dirname(os.path.dirname(__file__))
+reference_audio_path = os.path.join(base_dir, "app", "reference_audio")
+print('reference audio',reference_audio_path)
+reference_files = [os.path.join(reference_audio_path, f"reference{i}.mp3") for i in range(1, 4)]
+output_audio_dir = os.path.join(base_dir,"app", "output_audio")
+enhanced_audio_dir = os.path.join(base_dir,"app", "enhanced_audio")
+
 
 def clear_output_folder():
-    output_folder = "output_audio"
+    output_folder = output_audio_dir
     if os.path.exists(output_folder):
         for filename in os.listdir(output_folder):
             file_path = os.path.join(output_folder, filename)
@@ -28,7 +37,7 @@ def clear_output_folder():
     print("Output folder cleared.")
 
 def clear_enhanced_folder():
-    output_folder = "enhanced_audio"
+    output_folder = enhanced_audio_dir
     if os.path.exists(output_folder):
         for filename in os.listdir(output_folder):
             file_path = os.path.join(output_folder, filename)
@@ -56,21 +65,25 @@ def generate_tts(text, language):
     
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # if not torch.cuda.is_available():
+    #     raise RuntimeError("CUDA is not available. Please check your installation or ensure that a GPU is present.")
+    # device = torch.device("cuda") 
+    print('DEVICE ::',device)
     tts.to(device)
     
     current_process = "Generating audio in chunks"
     progress = 40
-    output_audio = "output_audio"
+    output_audio = output_audio_dir
     chunks = split_text_for_tts(text)
     print('CHUNK ::',chunks)
     audio_files = []
     
     for i, chunk in enumerate(chunks):
-        tts_output = os.path.join(output_audio, f"tts_output_{i}.wav")
+        tts_output = os.path.join(output_audio_dir, f"tts_output_{i}.wav")
         tts.tts_to_file(
             text=chunk,
             file_path=tts_output,
-            speaker_wav=[os.path.join("reference_audio", ref) for ref in reference_files],
+            speaker_wav=reference_files,
             language=language,
             speed=1.0,
             split_sentences=False
@@ -79,19 +92,20 @@ def generate_tts(text, language):
     
     current_process = "Enhancing audio"
     progress = 70
-    # enhance_audio_file(output_audio)
+    enhanced_audio_files = enhance_audio_file(output_audio)
+    print("enhanced_audio_files",enhanced_audio_files)
 
     current_process = "Audio generation and enhancement complete"
     progress = 100
 
     audio_durations = [get_duration(file) for file in audio_files]
     print('durations', audio_durations)
-    return audio_files, audio_durations,chunks
-
+    return enhanced_audio_files, audio_durations,chunks
 
 
 def enhance_audio_file(input_dir):
     enhance_executable = "resemble-enhance"
+    enhanced_audio_files = []  # List to store paths of enhanced audio files
 
     print(f"Input directory: {input_dir}")
 
@@ -106,8 +120,8 @@ def enhance_audio_file(input_dir):
     for input_file in input_files:
         input_path = os.path.join(input_dir, input_file)
         output_file = "enhanced_" + input_file
-        output_path = os.path.join(input_dir, output_file)
-        output_dir= "enhanced_audio"
+        output_dir= enhanced_audio_dir
+        output_path = os.path.join(output_dir, output_file)
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         
@@ -117,36 +131,26 @@ def enhance_audio_file(input_dir):
 
         try:
             # Run the enhancement process for each file
-            command = [enhance_executable, input_dir, output_dir, "--device", "cpu"]
+            command = [enhance_executable, input_path, output_path, "--device", "cuda"]
             print(f"Running command: {' '.join(command)}")
-            result = subprocess.run(command, check=True, capture_output=True, text=True)
+            result = subprocess.run(command, check=True, capture_output=True, text=True, encoding="utf-8")
             print(f"Command output: {result.stdout}")
-            print(f"Command error: {result.stderr}")
+            # print(f"Command error: {result.stderr}")
             
             if os.path.exists(output_dir):
                 print(f"Enhanced audio saved to: {output_dir}")
+                # Add the enhanced audio file path to the list
+                enhanced_audio_files.append(output_path)
             else:
                 print(f"Error: Enhanced file not created")
         except subprocess.CalledProcessError as e:
             print(f"Error running resemble-enhance: {e}")
             print(f"Command output: {e.output}")
 
-    print(f"Contents of output directory after enhancement: {os.listdir(input_dir)}")
+    print(f"Contents of output directory after enhancement: {os.listdir(enhanced_audio_dir)}")
+    # Return the list of enhanced audio files
+    return enhanced_audio_files
 
-
-# def get_duration(file_path):
-#     try:
-#         # Probe the MP3 file to get information
-#         probe = None
-#         probe = ffmpeg.probe(file_path, v="error", select_streams="a:0", show_entries="format=duration")
-
-#         # Extract the duration from the probe result
-#         audio_duration = float(probe["format"]["duration"])
-#         print('audio duration :', audio_duration)
-#         return audio_duration
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         return None
 def get_duration(file_path):
     """Get the duration of an audio or video file using ffprobe."""
     try:
@@ -164,6 +168,8 @@ def get_duration(file_path):
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+
     
 def split_text_for_tts(text, max_chars=220):
     # Split text into segments based on commas and full stops
@@ -192,6 +198,11 @@ def split_text_for_tts(text, max_chars=220):
         chunks.append(current_chunk)
 
     return chunks
+
+
+
+
+
 
 
 
