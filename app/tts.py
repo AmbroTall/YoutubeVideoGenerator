@@ -100,56 +100,68 @@ def generate_tts(text, language):
 
     audio_durations = [get_duration(file) for file in audio_files]
     print('durations', audio_durations)
-    return enhanced_audio_files, audio_durations,chunks
+    return audio_files, audio_durations,chunks
 
 
 def enhance_audio_file(input_dir):
     enhance_executable = "resemble-enhance"
-    enhanced_audio_files = []  # List to store paths of enhanced audio files
+    enhanced_audio_files = []
 
     print(f"Input directory: {input_dir}")
 
-    # Find all .wav files in the input directory
+    if not os.path.exists(enhanced_audio_dir):
+        os.makedirs(enhanced_audio_dir)
+
     input_files = [f for f in os.listdir(input_dir) if f.endswith('.wav')]
     print(f"WAV files found: {input_files}")
 
     if not input_files:
         print(f"No .wav files found in the input directory: {input_dir}")
-        return
+        return []
 
     for input_file in input_files:
         input_path = os.path.join(input_dir, input_file)
         output_file = "enhanced_" + input_file
-        output_dir= enhanced_audio_dir
-        output_path = os.path.join(output_dir, output_file)
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-       
-        print(f"Input file: {input_path}")
-        print(f"Output file: {output_path}")
+        output_path = os.path.join(enhanced_audio_dir, output_file)
+
+        print(f"Processing file: {input_path}")
+        print(f"Saving enhanced file to: {output_path}")
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"Using device: {device}")
+
+        command = [
+            enhance_executable,
+            "--device", device,
+            input_dir,
+            enhanced_audio_dir  # Output directory
+        ]
 
         try:
-            # Run the enhancement process for each file
-            command = [enhance_executable, input_path, output_path, "--device", "cuda"]
             print(f"Running command: {' '.join(command)}")
-            result = subprocess.run(command, check=True, capture_output=True, text=True, encoding="utf-8")
-            print(f"Command output: {result.stdout}")
-            # print(f"Command error: {result.stderr}")
+            result = subprocess.run(command, check=False, capture_output=True, text=True)
             
-            if os.path.exists(output_dir):
-                print(f"Enhanced audio saved to: {output_dir}")
-                # Add the enhanced audio file path to the list
+            # Log the command output
+            print(f"Command output: {result.stdout}")
+            print(f"Command error: {result.stderr}")
+            print(f"Return code: {result.returncode}")
+
+            if result.returncode != 0:
+                print(f"Error: Command failed with code {result.returncode}")
+                continue
+
+            if os.path.exists(output_path):
+                print(f"Enhanced audio saved: {output_path}")
                 enhanced_audio_files.append(output_path)
             else:
-                print(f"Error: Enhanced file not created")
-        except subprocess.CalledProcessError as e:
-            print(f"Error running resemble-enhance: {e}")
-            print(f"Command output: {e.output}")
+                print(f"Error: Enhanced file {output_file} not created.")
+        except Exception as ex:
+            print(f"Unexpected error: {ex}")
 
-    print(f"Contents of output directory after enhancement: {os.listdir(enhanced_audio_dir)}")
-    # Return the list of enhanced audio files
+    print(f"Contents of enhanced output directory: {os.listdir(enhanced_audio_dir)}")
     return enhanced_audio_files
+
+
 
 def get_duration(file_path):
     """Get the duration of an audio or video file using ffprobe."""
@@ -200,6 +212,25 @@ def split_text_for_tts(text, max_chars=220):
     return chunks
 
 
+
+
+
+
+
+
+# def get_duration(file_path):
+#     try:
+#         # Probe the MP3 file to get information
+#         probe = None
+#         probe = ffmpeg.probe(file_path, v="error", select_streams="a:0", show_entries="format=duration")
+
+#         # Extract the duration from the probe result
+#         audio_duration = float(probe["format"]["duration"])
+#         print('audio duration :', audio_duration)
+#         return audio_duration
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return None
 
 
 
