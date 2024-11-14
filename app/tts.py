@@ -153,8 +153,7 @@ def enhance_audio_file(input_dir):
             if os.path.exists(output_path):
                 print(f"Enhanced audio saved: {output_path}")
                 enhanced_audio_files.append(output_path)
-            else:
-                print(f"Error: Enhanced file {output_file} not created.")
+            
         except Exception as ex:
             print(f"Unexpected error: {ex}")
 
