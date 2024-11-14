@@ -100,7 +100,7 @@ def generate_tts(text, language):
 
     audio_durations = [get_duration(file) for file in audio_files]
     print('durations', audio_durations)
-    return audio_files, audio_durations,chunks
+    return enhanced_audio_files, audio_durations,chunks
 
 
 def enhance_audio_file(input_dir):
