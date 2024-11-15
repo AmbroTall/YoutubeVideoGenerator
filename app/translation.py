@@ -44,7 +44,9 @@ def translate_text(text, target_language, config):
     return translated_text
 
 def translate_chunk(chunk, target_language):
-    prompt = f"Translate the following text to {target_language}:\n\n{chunk}\n\nTranslation:"
+    target_language_name = "Italian" if target_language == "it" else target_language
+
+    prompt = f"Translate the following text to {target_language_name}:\n\n{chunk}\n\nTranslation:"
     
     response = client.chat.completions.create(
         model=MODEL,
@@ -55,7 +57,26 @@ def translate_chunk(chunk, target_language):
         temperature=0.3,
     )
 
-    return response.choices[0].message.content.strip()
+    translation = response.choices[0].message.content.strip()
+
+    # Check if the translation is identical to the input
+    if translation == chunk.strip():
+        print(f"Warning: Translation for {target_language} might have failed. Retrying...")
+        
+        # Retry with a stricter prompt
+        prompt = f"Translate into formal {target_language_name}, avoiding comments or explanations. Text:\n\n{chunk}\n\nTranslation:"
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": "Translate accurately without adding comments."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3,
+        )
+        translation = response.choices[0].message.content.strip()
+
+    return translation
+
 
 def split_text_into_chunks(text, max_chunk_length=2000):
     sentences = sent_tokenize(text)
