@@ -456,7 +456,7 @@ def adjust_lines_for_consistency(lines, font, max_width):
     
     return adjusted_lines
 
-def main(video_url,lang,config):
+def main(video_url,lang,config,k):
     # video_url = input("Enter the YouTube video URL: ")
     
     thumbnail = get_youtube_thumbnail(video_url)
@@ -477,7 +477,7 @@ def main(video_url,lang,config):
         print(f"Extracted text: {extracted_text}")
 
 
-    k = "001"
+    # k = "001"
     
     try:
         thumbnail_path = generate_thumbnail(translated_extracted_text, lang, k, config, {})

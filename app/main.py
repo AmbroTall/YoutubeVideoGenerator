@@ -61,7 +61,7 @@ def index():
             audio_files, audio_durations, chunks = tts.generate_tts(translated_text, lang)
             
             # Generate Thumbnail
-            thumbnail = thumbnail_generation.main(youtube_url, lang, config)
+            thumbnail = thumbnail_generation.main(youtube_url, lang, config,k)
             
             # Generate video
             video_file = video_generation.generate_video(audio_files, audio_durations, translated_text, chunks, config, lang, k)
