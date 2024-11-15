@@ -26,7 +26,8 @@
             margin-bottom: 5px;
         }
         input[type="text"],
-        input[type="number"] {
+        input[type="number"],
+        select {
             width: 100%;
             padding: 8px;
             margin-bottom: 15px;
@@ -48,17 +49,19 @@
 </head>
 <body>
     <h1>YouTube Video Processor</h1>
-    <form method="POST">
+    <form method="POST" id="ttsForm">
         <label for="youtube_url">YouTube URL:</label>
         <input type="text" id="youtube_url" name="youtube_url" required>
         <br>
 
-        <label for="language">Language:</label>
-        <select name="language" required>
+        <label for="languages">Select Languages:</label>
+        <select name="languages[]" id="languages" multiple required>
           <option value="fr">French</option>
           <option value="de">German</option>
           <option value="es">Spanish</option>
           <option value="it">Italian</option>
+          <option value="pl">Polish</option>
+          <option value="pt">Portuguese</option>
         </select>
         <br>
         
@@ -92,6 +95,12 @@
 }
 </style>
     <div class="container">
+      <div id="progress" style="display: none;">
+        <p id="process"></p>
+        <progress id="progressBar" value="0" max="100"></progress>
+    </div>
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+    <a id="downloadLink" style="display: none;">Download Audio</a>
         <h1>Thumbnails and Videos</h1>
         <div class="row">
           {% for image in images %}
@@ -115,4 +124,18 @@
         </div>
       </div>
 </body>
+<script>
+  function checkProgress() {
+            $.get('/progress', function(data) {
+                $('#progressBar').val(data.progress);
+                $('#process').text(data.process);
+                if (data.progress < 100) {
+                    setTimeout(checkProgress, 1000);
+                } else {
+                    $('#audioPlayer').attr('src', '/audio').show();
+                    $('#downloadLink').attr('href', '/audio').show().text('Download Audio');
+                }
+            });
+        }
+</script>
 </html>

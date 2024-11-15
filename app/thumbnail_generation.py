@@ -16,7 +16,7 @@ import translation
 
 # Get the absolute path to the config directory
 config_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config')
-
+base_dir = os.path.dirname(os.path.dirname(__file__))  # Base directory of the app
 # Open the config.yaml file using the absolute path
 with open(os.path.join(config_dir, 'config.yaml'), 'r') as config_file:
     config = yaml.safe_load(config_file)
@@ -46,7 +46,7 @@ def encode_image(image):
     return base64.b64encode(buffered.getvalue()).decode('utf-8')
 
 def extract_text_from_image(img):
-    client = OpenAI(api_key="sk-MWy2JCoFFQpZlMyK-kCqIAtRRrO1To_Dqzj8GdkTpuT3BlbkFJo9ZhJNzzmwkThyGfqrKnHaEuQygri-Mp4qhYT-h1sA")
+    client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
     base64_image = encode_image(img)
     try:
         response = client.chat.completions.create(
@@ -89,8 +89,10 @@ def generate_thumbnail(text, lang, k, config, color_highlights):
     # 1. Initial Setup
     width = config['video']['width']
     height = config['video']['height']
-    font_path = config['paths']['font']
-    object_image_folder = config['paths']['faces']
+    # font_path = config['paths']['font']
+    # object_image_folder = config['paths']['faces']
+    font_path= os.path.join(base_dir, 'app','static','fonts')
+    object_image_folder = os.path.join(base_dir, 'app','static','faces')
     target_padding_top_bottom = 25  # For top and bottom padding
     target_padding_left = 30  # For left padding
     padding_tolerance = 2
