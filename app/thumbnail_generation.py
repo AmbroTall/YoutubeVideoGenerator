@@ -447,7 +447,7 @@ def adjust_lines_for_consistency(lines, font, max_width):
     
     return adjusted_lines
 
-def main(video_url,lang):
+def main(video_url,lang,config):
     # video_url = input("Enter the YouTube video URL: ")
     
     thumbnail = get_youtube_thumbnail(video_url)
