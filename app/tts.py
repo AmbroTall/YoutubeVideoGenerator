@@ -105,7 +105,7 @@ def generate_tts(text, language):
     current_process = "Enhancing audio"
     progress = 70
 
-    # enhance_audio_file(language_output_dir)
+    # enhance_audio_file(language_output_dir,language)
     
     current_process = "Audio generation and enhancement complete"
     progress = 100
@@ -117,7 +117,7 @@ def generate_tts(text, language):
     return audio_files, audio_durations,chunks
 
 
-def enhance_audio_file(input_dir):
+def enhance_audio_file(input_dir,language):
     enhance_executable = "resemble-enhance"
 
 

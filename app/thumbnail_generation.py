@@ -89,8 +89,8 @@ def generate_thumbnail(text, lang, k, config, color_highlights):
     # 1. Initial Setup
     width = config['video']['width']
     height = config['video']['height']
-    font_path = os.path.join(config['paths']['font'])
-    object_image_folder = os.path.join(config['paths']['faces'])
+    font_path = os.path.join(base_dir,'app',config['paths']['font'])
+    object_image_folder = os.path.join(base_dir,'app',config['paths']['faces'])
     # font_path= os.path.join(base_dir, 'app','static','fonts')
     # object_image_folder = os.path.join(base_dir, 'app','static','faces')
     target_padding_top_bottom = 25  # For top and bottom padding
@@ -187,7 +187,7 @@ def generate_thumbnail(text, lang, k, config, color_highlights):
     background = Image.alpha_composite(background, text_layer)
 
     # Save and return
-    thumbnail_path = os.path.join(config['paths']['thumbnails'], f'{lang}_{k}.png')
+    thumbnail_path = os.path.join(base_dir,'app',config['paths']['thumbnails'], f'{lang}_{k}.png')
     background.convert('RGB').save(thumbnail_path)
     
     # Calculate max_line_width
