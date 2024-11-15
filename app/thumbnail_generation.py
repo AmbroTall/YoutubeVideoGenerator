@@ -89,10 +89,10 @@ def generate_thumbnail(text, lang, k, config, color_highlights):
     # 1. Initial Setup
     width = config['video']['width']
     height = config['video']['height']
-    # font_path = config['paths']['font']
-    # object_image_folder = config['paths']['faces']
-    font_path= os.path.join(base_dir, 'app','static','fonts')
-    object_image_folder = os.path.join(base_dir, 'app','static','faces')
+    font_path = os.path.join(config['paths']['font'])
+    object_image_folder = os.path.join(config['paths']['faces'])
+    # font_path= os.path.join(base_dir, 'app','static','fonts')
+    # object_image_folder = os.path.join(base_dir, 'app','static','faces')
     target_padding_top_bottom = 25  # For top and bottom padding
     target_padding_left = 30  # For left padding
     padding_tolerance = 2
@@ -364,10 +364,19 @@ def print_debug_info(font_size, num_lines, text_width, max_line_width, top_paddi
 def get_random_face_image(folder):
     valid_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.bmp')
     valid_images = [f for f in os.listdir(folder) if f.lower().endswith(valid_extensions)]
+    
     if not valid_images:
-        raise ValueError(f"No valid image files found in {folder}")
+        raise ValueError(f"No valid image files found in {folder}. Please check the folder content.")
+    
     img_path = os.path.join(folder, random.choice(valid_images))
-    return Image.open(img_path)
+    try:
+        img = Image.open(img_path)
+        img.verify()  # Validate image integrity
+        img.close()   # Close file handle after verification
+        return Image.open(img_path)
+    except Exception as e:
+        raise ValueError(f"Failed to load face image {img_path}. Error: {e}")
+
 
 def check_line_length_consistency(lines):
     if not lines:
