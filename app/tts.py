@@ -149,14 +149,14 @@ def enhance_audio_file(input_dir,language):
 
         try:
             # Run the enhancement process for each file
-            command = [enhance_executable, input_dir, output_dir, "--device", device]
+            command = [enhance_executable, input_dir, output_path, "--device", device]
             print(f"Running command: {' '.join(command)}")
             result = subprocess.run(command, check=True, capture_output=True, text=True)
             print(f"Command output: {result.stdout}")
             print(f"Command error: {result.stderr}")
             
-            if os.path.exists(output_dir):
-                print(f"Enhanced audio saved to: {output_dir}")
+            if os.path.exists(output_path):
+                print(f"Enhanced audio saved to: {output_path}")
             else:
                 print(f"Error: Enhanced file not created")
         except subprocess.CalledProcessError as e:
