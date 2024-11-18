@@ -91,7 +91,7 @@ def generate_tts(text, language):
             speed=1.0,
             split_sentences=False
         )
-        audio_files.append(tts_output)
+        # audio_files.append(tts_output)
 
         if os.path.exists(tts_output):
             audio_files.append(tts_output)
