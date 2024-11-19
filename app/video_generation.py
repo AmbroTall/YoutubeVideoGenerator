@@ -14,8 +14,17 @@ from moviepy.config import change_settings
 # Set the correct path to the ImageMagick binary
 change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
 
+def natural_sort(file_list):
+    """Sorts a list of filenames based on their numeric suffix."""
+    def extract_number(filename):
+        match = re.search(r'(\d+)', filename)
+        return int(match.group(1)) if match else 0
+
+    return sorted(file_list, key=extract_number)
+
 
 def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, config, lang, k):
+    enhanced_audio_files = natural_sort(enhanced_audio_files)
     # Log audio file paths
     print("Received enhanced audio files for video generation:")
     for file in enhanced_audio_files:
