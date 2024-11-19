@@ -476,9 +476,7 @@ def main(video_url,lang,config,k):
     else:
         print(f"Extracted text: {extracted_text}")
 
-
     # k = "001"
-    
     try:
         thumbnail_path = generate_thumbnail(translated_extracted_text, lang, k, config, {})
         if thumbnail_path:

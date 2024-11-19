@@ -91,7 +91,7 @@ def generate_tts(text, language):
             speed=1.0,
             split_sentences=False
         )
-        audio_files.append(tts_output)
+        # audio_files.append(tts_output)
 
         if os.path.exists(tts_output):
             audio_files.append(tts_output)
@@ -120,10 +120,9 @@ def generate_tts(text, language):
 def enhance_audio_file(input_dir,language):
     enhance_executable = "resemble-enhance"
 
-
     language_enhanced_dir = os.path.join(enhanced_audio_dir, language)
-    os.makedirs(language_enhanced_dir, exist_ok=True)
-    print(f"Enhancing audio for {language}. Input directory: {input_dir}, Output directory: {language_enhanced_dir}")
+    # os.makedirs(language_enhanced_dir, exist_ok=True)
+    print(f"Enhancing audio for {language}. Input directory: {input_dir}")
 
     print(f"Input directory: {input_dir}")
 
@@ -138,7 +137,10 @@ def enhance_audio_file(input_dir,language):
     for input_file in input_files:
         input_path = os.path.join(input_dir, input_file)
         output_file = f"enhanced_{input_file}"
-        output_path = os.path.join(language_enhanced_dir, output_file)
+        output_path = os.path.join(input_dir, output_file)
+        output_dir= language_enhanced_dir 
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
         
        
         print(f"Input file: {input_path}")
@@ -149,23 +151,21 @@ def enhance_audio_file(input_dir,language):
 
         try:
             # Run the enhancement process for each file
-            command = [enhance_executable, input_dir, output_path, "--device", device]
+            command = [enhance_executable, input_dir, output_dir, "--device", device]
             print(f"Running command: {' '.join(command)}")
             result = subprocess.run(command, check=True, capture_output=True, text=True)
             print(f"Command output: {result.stdout}")
             print(f"Command error: {result.stderr}")
             
-            if os.path.exists(output_path):
-                print(f"Enhanced audio saved to: {output_path}")
+            if os.path.exists(output_dir):
+                print(f"Enhanced audio saved to: {output_dir}")
             else:
                 print(f"Error: Enhanced file not created")
         except subprocess.CalledProcessError as e:
             print(f"Error running resemble-enhance: {e}")
             print(f"Command output: {e.output}")
 
-    print(f"Contents of enhanced directory after processing {language}: {os.listdir(language_enhanced_dir)}")
-
-
+    print(f"Contents of enhanced directory after processing {language}: {os.listdir(input_dir)}")
 
 
 def get_duration(file_path):
