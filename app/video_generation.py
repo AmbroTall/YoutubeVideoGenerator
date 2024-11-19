@@ -15,18 +15,19 @@ from moviepy.config import change_settings
 change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
 
 
-def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
-    # Generate thumbnail
-    # thumbnail_path = generate_thumbnail(chunk[:100], lang, k, config,{})  # Use first 100 chars for thumbnail
-    
-    # Load audio clips
-    audio_clips = [AudioFileClip(audio_file) for audio_file in audio_files]
-    # Log audio files to check
-    # print("Audio files:", audio_files)
-    # full_audio = concatenate_audioclips(audio_clips)
+def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, config, lang, k):
+    # Log audio file paths
+    print("Received enhanced audio files for video generation:")
+    for file in enhanced_audio_files:
+        print(file)
+
+    # Load audio clips with error handling
     audio_clips = []
-    for audio_file in audio_files:
-        try:      
+    for audio_file in enhanced_audio_files:
+        if not os.path.exists(audio_file):
+            print(f"File not found: {audio_file}")
+            continue
+        try:
             audio_clips.append(AudioFileClip(audio_file))
         except Exception as e:
             print(f"Error loading {audio_file}: {e}")
@@ -97,7 +98,7 @@ def generate_video(audio_files,audio_durations,chunk, chunks, config, lang, k):
     print(f"Final video duration: {final_video.duration} seconds")
 
     # Add subtitles (assuming create_subtitles is defined)
-    subtitles = create_subtitles(chunks, final_video.w, final_video.h, audio_durations)
+    subtitles = create_subtitles(chunks, final_video.w, final_video.h, enhanced_audio_durations)
 
     
     # Combine video and subtitles

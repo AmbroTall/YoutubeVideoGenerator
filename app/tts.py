@@ -65,9 +65,6 @@ def generate_tts(text, language):
     
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # if not torch.cuda.is_available():
-    #     raise RuntimeError("CUDA is not available. Please check your installation or ensure that a GPU is present.")
-    # device = torch.device("cuda") 
     print('DEVICE ::',device)
     tts.to(device)
     
@@ -105,20 +102,35 @@ def generate_tts(text, language):
     current_process = "Enhancing audio"
     progress = 70
 
-    # enhance_audio_file(language_output_dir,language)
+    enhance_audio_file(language_output_dir,language)
     
     current_process = "Audio generation and enhancement complete"
     progress = 100
 
-    enhanced_audio_files = [f for f in os.listdir(enhanced_audio_dir) if f.endswith('.wav')]
-    print("enhanced_audio_files",enhanced_audio_files)
-    audio_durations = [get_duration(file) for file in audio_files]
-    print('durations', audio_durations)
-    return audio_files, audio_durations,chunks
+    # Get enhanced audio files for the specific language
+    language_enhanced_dir = os.path.join(enhanced_audio_dir, language)
+    enhanced_audio_files = [
+        os.path.join(language_enhanced_dir, f)
+        for f in os.listdir(language_enhanced_dir) if f.endswith('.wav')
+    ]
+    print("Enhanced audio files:", enhanced_audio_files)
+
+    # Get durations of enhanced audio files
+    enhanced_audio_durations = []
+    for enhanced_file in enhanced_audio_files:
+        duration = get_duration(enhanced_file)
+        enhanced_audio_durations.append(duration)
+
+    print('Enhanced audio durations:', enhanced_audio_durations)
+
+    # audio_durations = [get_duration(file) for file in audio_files]
+    # print('durations', audio_durations)
+    return enhanced_audio_files , enhanced_audio_durations,chunks
 
 
 def enhance_audio_file(input_dir,language):
     enhance_executable = "resemble-enhance"
+
 
     language_enhanced_dir = os.path.join(enhanced_audio_dir, language)
     # os.makedirs(language_enhanced_dir, exist_ok=True)
@@ -166,6 +178,8 @@ def enhance_audio_file(input_dir,language):
             print(f"Command output: {e.output}")
 
     print(f"Contents of enhanced directory after processing {language}: {os.listdir(input_dir)}")
+
+
 
 
 def get_duration(file_path):
