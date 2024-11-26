@@ -13,6 +13,8 @@ import subprocess
 from moviepy.config import change_settings
 # Set the correct path to the ImageMagick binary
 change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
+base_dir = os.path.dirname(os.path.dirname(__file__)) 
+
 
 def natural_sort(file_list):
     """Sorts a list of filenames based on their numeric suffix."""
@@ -23,16 +25,16 @@ def natural_sort(file_list):
     return sorted(file_list, key=extract_number)
 
 
-def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, config, lang, k):
-    enhanced_audio_files = natural_sort(enhanced_audio_files)
+def generate_video(audio_files , audio_durations, chunks, config, lang, k):
+    audio_files = natural_sort(audio_files)
     # Log audio file paths
     print("Received enhanced audio files for video generation:")
-    for file in enhanced_audio_files:
+    for file in audio_files:
         print(file)
 
     # Load audio clips with error handling
     audio_clips = []
-    for audio_file in enhanced_audio_files:
+    for audio_file in audio_files:
         if not os.path.exists(audio_file):
             print(f"File not found: {audio_file}")
             continue
@@ -50,7 +52,7 @@ def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, conf
         print("Audio concatenation successful!")
     
     # Get a random background image
-    background_folder = config['paths']['background_videos']
+    # background_folder = os.path.join(base_dir,'app',config['paths']['background_videos'])
     # background_image = random.choice(os.listdir(background_folder))
     # background_path = os.path.join(background_folder, background_image)
     
@@ -69,7 +71,7 @@ def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, conf
     # subtitles = create_subtitles(chunks, video.w, video.h, audio_durations)
 
    # Get a list of all video files in the background folder
-    background_folder = config['paths']['background_videos']
+    background_folder = os.path.join(base_dir,'app',config['paths']['background_videos'])
     background_videos = [os.path.join(background_folder, file) for file in os.listdir(background_folder) if file.endswith(('.mp4', '.avi', '.mov'))]
     
     if not background_videos:
@@ -107,7 +109,7 @@ def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, conf
     print(f"Final video duration: {final_video.duration} seconds")
 
     # Add subtitles (assuming create_subtitles is defined)
-    subtitles = create_subtitles(chunks, final_video.w, final_video.h, enhanced_audio_durations)
+    subtitles = create_subtitles(chunks, final_video.w, final_video.h, audio_durations)
 
     
     # Combine video and subtitles
@@ -117,7 +119,7 @@ def generate_video(enhanced_audio_files , enhanced_audio_durations, chunks, conf
     final_video = final_video.set_audio(full_audio)
     
     # Write output file
-    output_file = os.path.join(config['paths']['output'], f"{lang}_{k}.mp4")
+    output_file = os.path.join(base_dir,'app',config['paths']['output'], f"{lang}_{k}.mp4")
     video = final_video.write_videofile(output_file, fps=24)
     
     return output_file

@@ -86,17 +86,17 @@ def index():
                 logger.info("Text translated successfully for language: %s", lang)
 
                 # Generate TTS
-                enhanced_audio_files, enhanced_audio_durations, chunks = tts.generate_tts(translated_text, lang)
+                audio_files, audio_durations, chunks = tts.generate_tts(translated_text, lang)
                 logger.info("TTS generated successfully for language: %s", lang)
-                logger.debug("Enhanced audio files: %s", enhanced_audio_files)
-                logger.debug("Audio durations: %s", enhanced_audio_durations)
+                logger.debug("Enhanced audio files: %s", audio_files)
+                logger.debug("Audio durations: %s", audio_durations)
 
                 # Generate Thumbnail
                 thumbnail = thumbnail_generation.main(youtube_url, lang, config, k)
                 logger.info("Thumbnail generated successfully for language: %s", lang)
 
                 # Generate video
-                video_file = video_generation.generate_video(enhanced_audio_files, enhanced_audio_durations, chunks, config, lang, k)
+                video_file = video_generation.generate_video(audio_files, audio_durations, chunks, config, lang, k)
                 logger.info("Video generated successfully for language: %s - File: %s", lang, video_file)
 
             except Exception as e:

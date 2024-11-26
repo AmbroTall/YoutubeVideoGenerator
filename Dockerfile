@@ -61,7 +61,7 @@ RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install -r re
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python -m nltk.downloader -d /usr/share/nltk_data all"
 
 # Install additional Python packages
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install flask-cors ffmpeg-python Pillow pydub resemble-enhance"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install flask-cors ffmpeg-python Pillow pydub resemble-enhance pydantic && pip install --upgrade TTS"
 
 # Install ImageMagick
 RUN apt-get update && apt-get install -y --fix-missing imagemagick
