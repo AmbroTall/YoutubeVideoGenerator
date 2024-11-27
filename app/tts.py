@@ -56,84 +56,9 @@ def clear_enhanced_folder():
 
 
 
-def generate_tts(text, language, batch_size=4):
-    global progress, current_process
-
-    current_process = "Clearing previous outputs"
-    progress = 5
-    clear_output_folder()
-    clear_enhanced_folder()
-
-    current_process = "Initializing TTS"
-    progress = 10
-    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f'DEVICE :: {device}')
-    tts.to(device)
-
-    current_process = "Splitting text into chunks"
-    progress = 20
-    chunks = split_text_for_tts(text)
-    print(f'TEXT CHUNKS ({language}): {chunks}')
-
-    if not chunks:
-        print("No text chunks were created. Check the input text.")
-        return [], [], []
-
-    language_output_dir = os.path.join(output_audio_dir, language)
-    os.makedirs(language_output_dir, exist_ok=True)
-    audio_files = []
-
-    current_process = "Generating audio in batches"
-    progress = 40
-    with ThreadPoolExecutor() as executor:
-        futures = []
-        for i in range(0, len(chunks), batch_size):
-            batch_chunks = chunks[i:i + batch_size]
-            batch_futures = [
-                executor.submit(generate_tts_chunk, tts, chunk, os.path.join(language_output_dir, f"{language}_tts_output_{i + j}.wav"), language, i + j)
-                for j, chunk in enumerate(batch_chunks)
-            ]
-            futures.extend(batch_futures)
-
-        for future in futures:
-            result = future.result()
-            if result:
-                audio_files.append(result)
-
-    if not audio_files:
-        print(f"No audio files generated for language {language}. Check TTS setup.")
-        return [], [], []
-
-    
-    audio_durations = [get_duration(file) for file in audio_files]
-    print('durations', audio_durations)
-
-    return audio_files, audio_durations, chunks
-
-
-def generate_tts_chunk(tts, text, output_path, language, index):
-    try:
-        tts.tts_to_file(
-            text=text,
-            file_path=output_path,
-            speaker_wav=reference_files,
-            language=language,
-            speed=1.0,
-            split_sentences=False
-        )
-        if os.path.exists(output_path):
-            print(f"Chunk {index} successfully generated: {output_path}")
-            return output_path
-        else:
-            print(f"Error: TTS output not created for chunk {index}")
-            return None
-    except Exception as e:
-        print(f"Error generating TTS for chunk {index}: {e}")
-        return None
-# def generate_tts(text, language):
+# def generate_tts(text, language, batch_size=4):
 #     global progress, current_process
-    
+
 #     current_process = "Clearing previous outputs"
 #     progress = 5
 #     clear_output_folder()
@@ -141,70 +66,145 @@ def generate_tts_chunk(tts, text, output_path, language, index):
 
 #     current_process = "Initializing TTS"
 #     progress = 10
-    
 #     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
 #     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#     print('DEVICE ::',device)
+#     print(f'DEVICE :: {device}')
 #     tts.to(device)
-    
-#     current_process = "Generating audio in chunks"
-#     progress = 40
+
+#     current_process = "Splitting text into chunks"
+#     progress = 20
+#     chunks = split_text_for_tts(text)
+#     print(f'TEXT CHUNKS ({language}): {chunks}')
+
+#     if not chunks:
+#         print("No text chunks were created. Check the input text.")
+#         return [], [], []
+
 #     language_output_dir = os.path.join(output_audio_dir, language)
 #     os.makedirs(language_output_dir, exist_ok=True)
-    
-#     chunks = split_text_for_tts(text)
-#     print(f'CHUNK ::{language}',chunks)
 #     audio_files = []
-    
-#     for i, chunk in enumerate(chunks):
-#         tts_output = os.path.join(language_output_dir, f"{language}_tts_output_{i}.wav")
 
+#     current_process = "Generating audio in batches"
+#     progress = 40
+#     with ThreadPoolExecutor() as executor:
+#         futures = []
+#         for i in range(0, len(chunks), batch_size):
+#             batch_chunks = chunks[i:i + batch_size]
+#             batch_futures = [
+#                 executor.submit(generate_tts_chunk, tts, chunk, os.path.join(language_output_dir, f"{language}_tts_output_{i + j}.wav"), language, i + j)
+#                 for j, chunk in enumerate(batch_chunks)
+#             ]
+#             futures.extend(batch_futures)
+
+#         for future in futures:
+#             result = future.result()
+#             if result:
+#                 audio_files.append(result)
+
+#     if not audio_files:
+#         print(f"No audio files generated for language {language}. Check TTS setup.")
+#         return [], [], []
+
+    
+#     audio_durations = [get_duration(file) for file in audio_files]
+#     print('durations', audio_durations)
+
+#     return audio_files, audio_durations, chunks
+
+
+# def generate_tts_chunk(tts, text, output_path, language, index):
+#     try:
 #         tts.tts_to_file(
-#             text=chunk,
-#             file_path=tts_output,
+#             text=text,
+#             file_path=output_path,
 #             speaker_wav=reference_files,
 #             language=language,
 #             speed=1.0,
 #             split_sentences=False
 #         )
-#         # audio_files.append(tts_output)
-
-#         if os.path.exists(tts_output):
-#             audio_files.append(tts_output)
+#         if os.path.exists(output_path):
+#             print(f"Chunk {index} successfully generated: {output_path}")
+#             return output_path
 #         else:
-#             print(f"Error: TTS output not created for chunk {i} in language {language}")
-
-#     if not audio_files:
-#         print(f"No audio files were generated for language {language}. Please check the TTS setup.")
-#         return [], [], []
+#             print(f"Error: TTS output not created for chunk {index}")
+#             return None
+#     except Exception as e:
+#         print(f"Error generating TTS for chunk {index}: {e}")
+#         return None
+def generate_tts(text, language):
+    global progress, current_process
     
-#     current_process = "Enhancing audio"
-#     progress = 70
+    current_process = "Clearing previous outputs"
+    progress = 5
+    clear_output_folder()
+    clear_enhanced_folder()
 
-#     enhance_audio_file(language_output_dir,language)
+    current_process = "Initializing TTS"
+    progress = 10
     
-#     current_process = "Audio generation and enhancement complete"
-#     progress = 100
+    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print('DEVICE ::',device)
+    tts.to(device)
+    
+    current_process = "Generating audio in chunks"
+    progress = 40
+    language_output_dir = os.path.join(output_audio_dir, language)
+    os.makedirs(language_output_dir, exist_ok=True)
+    
+    chunks = split_text_for_tts(text)
+    print(f'CHUNK ::{language}',chunks)
+    audio_files = []
+    
+    for i, chunk in enumerate(chunks):
+        tts_output = os.path.join(language_output_dir, f"{language}_tts_output_{i}.wav")
 
-#     # Get enhanced audio files for the specific language
-#     language_enhanced_dir = os.path.join(enhanced_audio_dir, language)
-#     enhanced_audio_files = [
-#         os.path.join(language_enhanced_dir, f)
-#         for f in os.listdir(language_enhanced_dir) if f.endswith('.wav')
-#     ]
-#     print("Enhanced audio files:", enhanced_audio_files)
+        tts.tts_to_file(
+            text=chunk,
+            file_path=tts_output,
+            speaker_wav=reference_files,
+            language=language,
+            speed=1.0,
+            split_sentences=False
+        )
+        # audio_files.append(tts_output)
 
-#     # Get durations of enhanced audio files
-#     enhanced_audio_durations = []
-#     for enhanced_file in enhanced_audio_files:
-#         duration = get_duration(enhanced_file)
-#         enhanced_audio_durations.append(duration)
+        if os.path.exists(tts_output):
+            audio_files.append(tts_output)
+        else:
+            print(f"Error: TTS output not created for chunk {i} in language {language}")
 
-#     print('Enhanced audio durations:', enhanced_audio_durations)
+    if not audio_files:
+        print(f"No audio files were generated for language {language}. Please check the TTS setup.")
+        return [], [], []
+    
+    current_process = "Enhancing audio"
+    progress = 70
 
-#     # audio_durations = [get_duration(file) for file in audio_files]
-#     # print('durations', audio_durations)
-#     return enhanced_audio_files , enhanced_audio_durations,chunks
+    # enhance_audio_file(language_output_dir,language)
+    
+    # current_process = "Audio generation and enhancement complete"
+    # progress = 100
+
+    # # Get enhanced audio files for the specific language
+    # language_enhanced_dir = os.path.join(enhanced_audio_dir, language)
+    # enhanced_audio_files = [
+    #     os.path.join(language_enhanced_dir, f)
+    #     for f in os.listdir(language_enhanced_dir) if f.endswith('.wav')
+    # ]
+    # print("Enhanced audio files:", enhanced_audio_files)
+
+    # # Get durations of enhanced audio files
+    # enhanced_audio_durations = []
+    # for enhanced_file in enhanced_audio_files:
+    #     duration = get_duration(enhanced_file)
+    #     enhanced_audio_durations.append(duration)
+
+    # print('Enhanced audio durations:', enhanced_audio_durations)
+
+    audio_durations = [get_duration(file) for file in audio_files]
+    print('durations', audio_durations)
+    return audio_files , audio_durations,chunks
 
 
 def enhance_audio_file(input_dir,language):
