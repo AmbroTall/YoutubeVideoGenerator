@@ -1,0 +1,10 @@
+2024-11-28 17:47:15,765 INFO __main__: Configuration loaded successfully.
+2024-11-28 17:47:15,815 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-11-28 17:47:15,815 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-11-28 17:47:15,825 INFO werkzeug:  * Restarting with stat
+2024-11-28 17:47:23,065 INFO __main__: Configuration loaded successfully.
+2024-11-28 17:47:23,070 WARNING werkzeug:  * Debugger is active!
+2024-11-28 17:47:23,092 INFO werkzeug:  * Debugger PIN: 143-031-273
