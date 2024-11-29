@@ -393,7 +393,7 @@ def process_videos_in_background():
                             logger.error("Error processing language %s: %s", lang, e, exc_info=True)
 
                     # Create and start threads for each language
-                    languages = ['de']  # Example languages
+                    languages = ['de','fr','es']  # Example languages
                     with ThreadPoolExecutor(max_workers=6) as executor:
                         executor.map(partial(process_language, k=k), languages)
 
