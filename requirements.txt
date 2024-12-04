@@ -3,7 +3,7 @@ Flask
 moviepy
 nltk==3.9.1
 numpy
-openai==1.52.0
+openai==1.55.3
 openai_whisper
 Pillow==11.0.0
 python-dotenv==1.0.1
