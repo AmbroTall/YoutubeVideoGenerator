@@ -120,7 +120,14 @@ def generate_video(audio_files , audio_durations, chunks, config, lang, k):
     
     # Write output file
     output_file = os.path.join(base_dir,'app',config['paths']['output'], f"{lang}_{k}.mp4")
-    video = final_video.write_videofile(output_file, fps=24)
+    video = final_video.write_videofile(
+            output_file, 
+            fps=24, 
+            codec="libx264", 
+            audio_codec="aac", 
+            threads=8, 
+            preset="ultrafast"  # This speeds up the encoding process significantly
+        )
     
     return output_file
 
