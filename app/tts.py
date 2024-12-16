@@ -81,7 +81,7 @@ def generate_tts(text, language):
             print(f"Reference text file does not exist: {ref_text}")
             continue
 
-        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", ref_audio, "--reference_text", ref_text, "--streaming", "False", "--output", tts_output, "--format", "wav"]
+        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", ref_audio, "--reference_text", ref_text,"--rate" ,48000,"--channels", 2, "--normalize", "NORMALIZE","--temperature", 0.7, "--top_p", 0.9 ,"--streaming", "False", "--output", tts_output, "--format", "wav"]
         print(f"Running command: {' '.join(command)}")
 
         try:

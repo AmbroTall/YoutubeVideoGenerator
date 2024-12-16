@@ -293,3 +293,10 @@ TypeError: sequence item 8: expected str instance, bool found
 2024-12-14 12:42:27,656 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
   return torch._C._cuda_getDeviceCount() > 0
 
+2024-12-16 23:24:48,210 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:24:48,269 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-16 23:24:48,269 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-16 23:24:48,273 INFO werkzeug:  * Restarting with stat
