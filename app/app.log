@@ -274,3 +274,22 @@ TypeError: sequence item 8: expected str instance, bool found
 2024-12-12 23:47:09,935 DEBUG __main__: Enhanced audio files: []
 2024-12-12 23:47:09,935 DEBUG __main__: Audio durations: []
 2024-12-12 23:47:10,011 INFO werkzeug: ::1 - - [12/Dec/2024 23:47:10] "POST / HTTP/1.1" 200 -
+2024-12-14 12:41:35,458 INFO __main__: Configuration loaded successfully.
+2024-12-14 12:41:35,648 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-14 12:41:35,648 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-14 12:41:35,656 INFO werkzeug:  * Restarting with stat
+2024-12-14 12:41:46,017 INFO __main__: Configuration loaded successfully.
+2024-12-14 12:41:46,026 WARNING werkzeug:  * Debugger is active!
+2024-12-14 12:41:46,027 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-14 12:42:20,138 INFO werkzeug: ::1 - - [14/Dec/2024 12:42:20] "GET / HTTP/1.1" 200 -
+2024-12-14 12:42:21,642 INFO werkzeug: ::1 - - [14/Dec/2024 12:42:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-12-14 12:42:27,638 INFO __main__: Transcript generated successfully.
+2024-12-14 12:42:27,639 INFO __main__: Text processed successfully.
+2024-12-14 12:42:27,639 INFO __main__: Processing language: de
+2024-12-14 12:42:27,640 INFO __main__: Text translated successfully for language: de
+2024-12-14 12:42:27,656 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+

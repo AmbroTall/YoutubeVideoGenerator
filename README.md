@@ -91,6 +91,16 @@ To run the application in a Docker container:
 1. Build the Docker image: `docker build -t youtube-video-generator .`
 2. Run the container: `docker run -p 5500:5500 youtube-video-generator`
 
+## Fish speech
+
+To run the application fish speech container:
+
+1. Cd to app and run : `python3 -m tools.api_server \
+    --listen 0.0.0.0:8080 \
+    --llama-checkpoint-path "checkpoints/fish-speech-1.5" \
+    --decoder-checkpoint-path "checkpoints/fish-speech-1.5/firefly-gan-vq-fsq-8x1024-21hz-generator.pth" \
+    --decoder-config-name firefly_gan_vq`
+
 ## Testing
 
 Run tests using: `python -m unittest discover tests`
