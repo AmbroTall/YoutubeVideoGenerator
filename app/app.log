@@ -300,3 +300,388 @@ TypeError: sequence item 8: expected str instance, bool found
  * Running on http://[::1]:5500
 2024-12-16 23:24:48,269 INFO werkzeug: [33mPress CTRL+C to quit[0m
 2024-12-16 23:24:48,273 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:24:57,284 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:24:57,289 WARNING werkzeug:  * Debugger is active!
+2024-12-16 23:24:57,290 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-16 23:27:22,856 INFO werkzeug: ::1 - - [16/Dec/2024 23:27:22] "GET / HTTP/1.1" 200 -
+2024-12-16 23:27:27,831 INFO __main__: Transcript generated successfully.
+2024-12-16 23:27:27,832 INFO __main__: Text processed successfully.
+2024-12-16 23:27:27,833 INFO __main__: Processing language: de
+2024-12-16 23:27:27,833 INFO __main__: Text translated successfully for language: de
+2024-12-16 23:27:27,847 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-16 23:27:27,848 ERROR __main__: Error processing language de: sequence item 10: expected str instance, int found
+Traceback (most recent call last):
+  File "/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/main.py", line 90, in process_language
+    audio_files, audio_durations, chunks = tts.generate_tts(translated_text, lang)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py", line 85, in generate_tts
+    print(f"Running command: {' '.join(command)}")
+                              ^^^^^^^^^^^^^^^^^
+TypeError: sequence item 10: expected str instance, int found
+2024-12-16 23:27:27,849 INFO werkzeug: ::1 - - [16/Dec/2024 23:27:27] "POST / HTTP/1.1" 200 -
+2024-12-16 23:29:52,307 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-16 23:29:54,138 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:30:11,895 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:30:11,913 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-16 23:30:11,913 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-16 23:30:11,914 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:30:20,007 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:30:20,013 WARNING werkzeug:  * Debugger is active!
+2024-12-16 23:30:20,013 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-16 23:30:20,063 INFO werkzeug: ::1 - - [16/Dec/2024 23:30:20] "GET / HTTP/1.1" 200 -
+2024-12-16 23:30:26,402 INFO __main__: Transcript generated successfully.
+2024-12-16 23:30:26,402 INFO __main__: Text processed successfully.
+2024-12-16 23:30:26,402 INFO __main__: Processing language: de
+2024-12-16 23:30:26,403 INFO __main__: Text translated successfully for language: de
+2024-12-16 23:30:26,404 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-16 23:30:26,405 ERROR __main__: Error processing language de: sequence item 10: expected str instance, int found
+Traceback (most recent call last):
+  File "/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/main.py", line 90, in process_language
+    audio_files, audio_durations, chunks = tts.generate_tts(translated_text, lang)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py", line 89, in generate_tts
+    print(f"Running command: {' '.join(command)}")
+                              ^^^^^^^^^^^^^^^^^
+TypeError: sequence item 10: expected str instance, int found
+2024-12-16 23:30:26,406 INFO werkzeug: ::1 - - [16/Dec/2024 23:30:26] "POST / HTTP/1.1" 200 -
+2024-12-16 23:33:19,881 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-16 23:33:21,211 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:33:35,070 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:33:35,092 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-16 23:33:35,092 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-16 23:33:35,093 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:33:42,852 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:33:42,858 WARNING werkzeug:  * Debugger is active!
+2024-12-16 23:33:42,859 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-16 23:33:48,777 INFO __main__: Transcript generated successfully.
+2024-12-16 23:33:48,777 INFO __main__: Text processed successfully.
+2024-12-16 23:33:48,778 INFO __main__: Processing language: de
+2024-12-16 23:33:48,778 INFO __main__: Text translated successfully for language: de
+2024-12-16 23:33:48,779 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-16 23:49:51,845 INFO __main__: TTS generated successfully for language: de
+2024-12-16 23:49:51,845 DEBUG __main__: Enhanced audio files: []
+2024-12-16 23:49:51,845 DEBUG __main__: Audio durations: []
+2024-12-16 23:49:51,851 INFO werkzeug: ::1 - - [16/Dec/2024 23:49:51] "POST / HTTP/1.1" 200 -
+2024-12-16 23:51:45,519 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-16 23:51:46,754 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:51:54,756 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:51:54,762 WARNING werkzeug:  * Debugger is active!
+2024-12-16 23:51:54,762 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-16 23:51:55,870 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-16 23:51:57,194 INFO werkzeug:  * Restarting with stat
+2024-12-16 23:52:05,125 INFO __main__: Configuration loaded successfully.
+2024-12-16 23:52:05,131 WARNING werkzeug:  * Debugger is active!
+2024-12-16 23:52:05,131 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-16 23:52:10,117 INFO __main__: Transcript generated successfully.
+2024-12-16 23:52:10,117 INFO __main__: Text processed successfully.
+2024-12-16 23:52:10,117 INFO __main__: Processing language: de
+2024-12-16 23:52:10,117 INFO __main__: Text translated successfully for language: de
+2024-12-16 23:52:10,119 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-17 00:12:37,584 INFO __main__: TTS generated successfully for language: de
+2024-12-17 00:12:37,584 DEBUG __main__: Enhanced audio files: []
+2024-12-17 00:12:37,584 DEBUG __main__: Audio durations: []
+2024-12-17 00:12:37,589 INFO werkzeug: ::1 - - [17/Dec/2024 00:12:37] "POST / HTTP/1.1" 200 -
+2024-12-17 00:14:53,365 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-17 00:14:54,586 INFO werkzeug:  * Restarting with stat
+2024-12-17 00:15:01,953 INFO __main__: Configuration loaded successfully.
+2024-12-17 00:15:01,958 WARNING werkzeug:  * Debugger is active!
+2024-12-17 00:15:01,959 INFO werkzeug:  * Debugger PIN: 223-602-709
+2024-12-17 00:15:35,159 INFO __main__: Transcript generated successfully.
+2024-12-17 00:15:35,160 INFO __main__: Text processed successfully.
+2024-12-17 00:15:35,160 INFO __main__: Processing language: de
+2024-12-17 00:15:35,160 INFO __main__: Text translated successfully for language: de
+2024-12-17 00:15:35,162 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-17 00:30:52,794 INFO __main__: TTS generated successfully for language: de
+2024-12-17 00:30:52,794 DEBUG __main__: Enhanced audio files: []
+2024-12-17 00:30:52,795 DEBUG __main__: Audio durations: []
+2024-12-17 00:30:52,799 INFO werkzeug: ::1 - - [17/Dec/2024 00:30:52] "POST / HTTP/1.1" 200 -
+2024-12-23 05:44:45,243 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:44:45,330 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 05:44:45,330 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 05:44:45,338 INFO werkzeug:  * Restarting with stat
+2024-12-23 05:44:52,652 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:44:52,658 WARNING werkzeug:  * Debugger is active!
+2024-12-23 05:44:52,658 INFO werkzeug:  * Debugger PIN: 127-964-678
+2024-12-23 05:44:54,077 INFO werkzeug: ::1 - - [23/Dec/2024 05:44:54] "GET / HTTP/1.1" 200 -
+2024-12-23 05:44:55,952 INFO werkzeug: ::1 - - [23/Dec/2024 05:44:55] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-12-23 05:45:03,985 INFO __main__: Transcript generated successfully.
+2024-12-23 05:45:03,985 INFO __main__: Text processed successfully.
+2024-12-23 05:45:03,987 INFO __main__: Processing language: de
+2024-12-23 05:45:03,987 INFO __main__: Text translated successfully for language: de
+2024-12-23 05:45:04,185 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 05:45:04,336 INFO __main__: TTS generated successfully for language: de
+2024-12-23 05:45:04,336 DEBUG __main__: Enhanced audio files: []
+2024-12-23 05:45:04,336 DEBUG __main__: Audio durations: []
+2024-12-23 05:45:04,337 INFO werkzeug: ::1 - - [23/Dec/2024 05:45:04] "POST / HTTP/1.1" 200 -
+2024-12-23 05:49:06,164 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:49:06,183 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 05:49:06,183 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 05:49:06,184 INFO werkzeug:  * Restarting with stat
+2024-12-23 05:49:13,112 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:49:13,117 WARNING werkzeug:  * Debugger is active!
+2024-12-23 05:49:13,117 INFO werkzeug:  * Debugger PIN: 127-964-678
+2024-12-23 05:49:19,642 INFO __main__: Transcript generated successfully.
+2024-12-23 05:49:19,642 INFO __main__: Text processed successfully.
+2024-12-23 05:49:19,643 INFO __main__: Processing language: de
+2024-12-23 05:49:19,643 INFO __main__: Text translated successfully for language: de
+2024-12-23 05:49:19,721 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 05:49:19,769 INFO __main__: TTS generated successfully for language: de
+2024-12-23 05:49:19,769 DEBUG __main__: Enhanced audio files: []
+2024-12-23 05:49:19,769 DEBUG __main__: Audio durations: []
+2024-12-23 05:49:19,774 INFO werkzeug: ::1 - - [23/Dec/2024 05:49:19] "POST / HTTP/1.1" 200 -
+2024-12-23 05:49:49,660 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:49:49,673 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 05:49:49,673 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 05:49:49,674 INFO werkzeug:  * Restarting with stat
+2024-12-23 05:49:57,214 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:49:57,219 WARNING werkzeug:  * Debugger is active!
+2024-12-23 05:49:57,219 INFO werkzeug:  * Debugger PIN: 127-964-678
+2024-12-23 05:49:57,256 INFO __main__: Transcript generated successfully.
+2024-12-23 05:49:57,257 INFO __main__: Text processed successfully.
+2024-12-23 05:49:57,257 INFO __main__: Processing language: de
+2024-12-23 05:49:57,257 INFO __main__: Text translated successfully for language: de
+2024-12-23 05:49:57,261 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 05:50:00,715 INFO __main__: TTS generated successfully for language: de
+2024-12-23 05:50:00,715 DEBUG __main__: Enhanced audio files: []
+2024-12-23 05:50:00,715 DEBUG __main__: Audio durations: []
+2024-12-23 05:50:00,720 INFO werkzeug: ::1 - - [23/Dec/2024 05:50:00] "POST / HTTP/1.1" 200 -
+2024-12-23 05:51:37,304 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:51:37,324 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 05:51:37,324 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 05:51:37,325 INFO werkzeug:  * Restarting with stat
+2024-12-23 05:51:45,497 INFO __main__: Configuration loaded successfully.
+2024-12-23 05:51:45,504 WARNING werkzeug:  * Debugger is active!
+2024-12-23 05:51:45,504 INFO werkzeug:  * Debugger PIN: 127-964-678
+2024-12-23 05:51:52,046 INFO __main__: Transcript generated successfully.
+2024-12-23 05:51:52,047 INFO __main__: Text processed successfully.
+2024-12-23 05:51:52,047 INFO __main__: Processing language: de
+2024-12-23 05:51:52,047 INFO __main__: Text translated successfully for language: de
+2024-12-23 05:51:52,049 WARNING py.warnings: /home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 05:51:53,977 INFO __main__: TTS generated successfully for language: de
+2024-12-23 05:51:53,977 DEBUG __main__: Enhanced audio files: []
+2024-12-23 05:51:53,977 DEBUG __main__: Audio durations: []
+2024-12-23 05:51:53,984 INFO werkzeug: ::1 - - [23/Dec/2024 05:51:53] "POST / HTTP/1.1" 200 -
+2024-12-23 06:42:26,353 INFO __main__: Configuration loaded successfully.
+2024-12-23 06:42:26,441 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 06:42:26,441 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 06:42:26,453 INFO werkzeug:  * Restarting with stat
+2024-12-23 06:42:34,866 INFO __main__: Configuration loaded successfully.
+2024-12-23 06:42:34,872 WARNING werkzeug:  * Debugger is active!
+2024-12-23 06:42:34,873 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 06:42:34,983 INFO __main__: Transcript generated successfully.
+2024-12-23 06:42:34,983 INFO __main__: Text processed successfully.
+2024-12-23 06:42:34,983 INFO __main__: Processing language: de
+2024-12-23 06:42:34,984 INFO __main__: Text translated successfully for language: de
+2024-12-23 06:42:35,075 WARNING py.warnings: /home/paolo/Desktop/videoapp/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 06:42:35,209 INFO __main__: TTS generated successfully for language: de
+2024-12-23 06:42:35,210 DEBUG __main__: Enhanced audio files: []
+2024-12-23 06:42:35,210 DEBUG __main__: Audio durations: []
+2024-12-23 06:42:35,245 INFO werkzeug: ::1 - - [23/Dec/2024 06:42:35] "POST / HTTP/1.1" 200 -
+2024-12-23 06:43:22,016 INFO __main__: Configuration loaded successfully.
+2024-12-23 06:43:22,029 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 06:43:22,029 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 06:43:22,030 INFO werkzeug:  * Restarting with stat
+2024-12-23 06:43:32,345 INFO __main__: Configuration loaded successfully.
+2024-12-23 06:43:32,351 WARNING werkzeug:  * Debugger is active!
+2024-12-23 06:43:32,352 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 06:43:32,402 INFO __main__: Transcript generated successfully.
+2024-12-23 06:43:32,402 INFO __main__: Text processed successfully.
+2024-12-23 06:43:32,403 INFO __main__: Processing language: de
+2024-12-23 06:43:32,403 INFO __main__: Text translated successfully for language: de
+2024-12-23 06:43:32,536 WARNING py.warnings: /home/paolo/Desktop/videoapp/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:118: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2024-12-23 06:59:11,117 INFO __main__: TTS generated successfully for language: de
+2024-12-23 06:59:11,117 DEBUG __main__: Enhanced audio files: []
+2024-12-23 06:59:11,117 DEBUG __main__: Audio durations: []
+2024-12-23 06:59:11,124 INFO werkzeug: ::1 - - [23/Dec/2024 06:59:11] "POST / HTTP/1.1" 200 -
+2024-12-23 08:25:32,000 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:25:32,048 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 08:25:32,048 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 08:25:32,048 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:25:42,149 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:25:42,154 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:25:42,154 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:26:04,329 INFO __main__: Transcript generated successfully.
+2024-12-23 08:26:04,330 INFO __main__: Text processed successfully.
+2024-12-23 08:26:04,330 INFO __main__: Processing language: de
+2024-12-23 08:26:04,330 INFO __main__: Text translated successfully for language: de
+2024-12-23 08:26:04,386 INFO __main__: TTS generated successfully for language: de
+2024-12-23 08:26:04,387 DEBUG __main__: Enhanced audio files: []
+2024-12-23 08:26:04,387 DEBUG __main__: Audio durations: []
+2024-12-23 08:26:04,401 INFO werkzeug: ::1 - - [23/Dec/2024 08:26:04] "POST / HTTP/1.1" 200 -
+2024-12-23 08:27:19,779 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:27:21,713 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:27:34,505 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:27:34,513 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:27:34,514 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:27:34,634 INFO __main__: Transcript generated successfully.
+2024-12-23 08:27:34,635 INFO __main__: Text processed successfully.
+2024-12-23 08:27:34,636 INFO __main__: Processing language: de
+2024-12-23 08:27:34,636 INFO __main__: Text translated successfully for language: de
+2024-12-23 08:27:34,643 INFO __main__: TTS generated successfully for language: de
+2024-12-23 08:27:34,643 DEBUG __main__: Enhanced audio files: []
+2024-12-23 08:27:34,643 DEBUG __main__: Audio durations: []
+2024-12-23 08:27:34,667 INFO werkzeug: ::1 - - [23/Dec/2024 08:27:34] "POST / HTTP/1.1" 200 -
+2024-12-23 08:30:05,920 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:30:07,548 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:30:17,593 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:30:17,598 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:30:17,599 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:30:22,943 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:30:24,381 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:30:34,387 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:30:34,393 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:30:34,393 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:30:34,454 INFO __main__: Transcript generated successfully.
+2024-12-23 08:30:34,454 INFO __main__: Text processed successfully.
+2024-12-23 08:30:34,454 INFO __main__: Processing language: de
+2024-12-23 08:30:34,454 INFO __main__: Text translated successfully for language: de
+2024-12-23 08:42:08,885 INFO __main__: TTS generated successfully for language: de
+2024-12-23 08:42:08,899 DEBUG __main__: Enhanced audio files: []
+2024-12-23 08:42:08,899 DEBUG __main__: Audio durations: []
+2024-12-23 08:42:08,917 INFO werkzeug: ::1 - - [23/Dec/2024 08:42:08] "POST / HTTP/1.1" 200 -
+2024-12-23 08:45:36,518 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:45:38,093 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:45:54,704 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:45:54,710 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:45:54,710 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:45:55,866 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:45:57,453 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:46:07,296 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:46:07,302 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:46:07,303 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:46:15,979 INFO __main__: Transcript generated successfully.
+2024-12-23 08:46:15,979 INFO __main__: Text processed successfully.
+2024-12-23 08:46:15,980 INFO __main__: Processing language: de
+2024-12-23 08:46:15,980 INFO __main__: Text translated successfully for language: de
+2024-12-23 08:46:15,981 INFO __main__: TTS generated successfully for language: de
+2024-12-23 08:46:15,981 DEBUG __main__: Enhanced audio files: []
+2024-12-23 08:46:15,981 DEBUG __main__: Audio durations: []
+2024-12-23 08:46:15,988 INFO werkzeug: ::1 - - [23/Dec/2024 08:46:15] "POST / HTTP/1.1" 200 -
+2024-12-23 08:46:41,001 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 08:46:42,511 INFO werkzeug:  * Restarting with stat
+2024-12-23 08:46:52,737 INFO __main__: Configuration loaded successfully.
+2024-12-23 08:46:52,743 WARNING werkzeug:  * Debugger is active!
+2024-12-23 08:46:52,744 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 08:46:53,416 INFO __main__: Transcript generated successfully.
+2024-12-23 08:46:53,417 INFO __main__: Text processed successfully.
+2024-12-23 08:46:53,417 INFO __main__: Processing language: de
+2024-12-23 08:46:53,417 INFO __main__: Text translated successfully for language: de
+2024-12-23 08:58:18,559 INFO __main__: TTS generated successfully for language: de
+2024-12-23 08:58:18,560 DEBUG __main__: Enhanced audio files: []
+2024-12-23 08:58:18,560 DEBUG __main__: Audio durations: []
+2024-12-23 08:58:18,565 INFO werkzeug: ::1 - - [23/Dec/2024 08:58:18] "POST / HTTP/1.1" 200 -
+2024-12-23 09:05:51,254 INFO __main__: Configuration loaded successfully.
+2024-12-23 09:05:51,273 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 09:05:51,274 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 09:05:51,274 INFO werkzeug:  * Restarting with stat
+2024-12-23 09:06:01,722 INFO __main__: Configuration loaded successfully.
+2024-12-23 09:06:01,728 WARNING werkzeug:  * Debugger is active!
+2024-12-23 09:06:01,728 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 09:08:38,025 INFO __main__: Transcript generated successfully.
+2024-12-23 09:08:38,039 INFO __main__: Text processed successfully.
+2024-12-23 09:08:38,040 INFO __main__: Processing language: de
+2024-12-23 09:08:38,040 INFO __main__: Text translated successfully for language: de
+2024-12-23 09:19:40,190 INFO __main__: TTS generated successfully for language: de
+2024-12-23 09:19:40,190 DEBUG __main__: Enhanced audio files: []
+2024-12-23 09:19:40,190 DEBUG __main__: Audio durations: []
+2024-12-23 09:19:40,264 INFO werkzeug: ::1 - - [23/Dec/2024 09:19:40] "POST / HTTP/1.1" 200 -
+2024-12-23 09:25:07,809 INFO __main__: Configuration loaded successfully.
+2024-12-23 09:25:07,842 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 09:25:07,842 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 09:25:07,850 INFO werkzeug:  * Restarting with stat
+2024-12-23 09:25:18,376 INFO __main__: Configuration loaded successfully.
+2024-12-23 09:25:18,381 WARNING werkzeug:  * Debugger is active!
+2024-12-23 09:25:18,382 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 09:25:18,442 INFO __main__: Transcript generated successfully.
+2024-12-23 09:25:18,442 INFO __main__: Text processed successfully.
+2024-12-23 09:25:18,442 INFO __main__: Processing language: de
+2024-12-23 09:25:18,442 INFO __main__: Text translated successfully for language: de
+2024-12-23 09:35:33,645 INFO __main__: TTS generated successfully for language: de
+2024-12-23 09:35:33,646 DEBUG __main__: Enhanced audio files: []
+2024-12-23 09:35:33,646 DEBUG __main__: Audio durations: []
+2024-12-23 09:35:33,654 INFO werkzeug: ::1 - - [23/Dec/2024 09:35:33] "POST / HTTP/1.1" 200 -
+2024-12-23 11:52:13,760 INFO werkzeug:  * Detected change in '/home/paolo/projects/client/run_basicxtts/run_basicxtts/Youtube Video Generator/app/tts.py', reloading
+2024-12-23 11:52:17,084 INFO werkzeug:  * Restarting with stat
+2024-12-23 11:52:47,573 INFO __main__: Configuration loaded successfully.
+2024-12-23 11:52:47,651 INFO werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:5500
+ * Running on http://[::1]:5500
+2024-12-23 11:52:47,651 INFO werkzeug: [33mPress CTRL+C to quit[0m
+2024-12-23 11:52:47,652 INFO werkzeug:  * Restarting with stat
+2024-12-23 11:53:01,981 INFO __main__: Configuration loaded successfully.
+2024-12-23 11:53:01,986 WARNING werkzeug:  * Debugger is active!
+2024-12-23 11:53:01,987 INFO werkzeug:  * Debugger PIN: 109-376-450
+2024-12-23 11:53:02,097 INFO werkzeug: ::1 - - [23/Dec/2024 11:53:02] "GET / HTTP/1.1" 200 -
+2024-12-23 11:54:38,025 INFO werkzeug: ::1 - - [23/Dec/2024 11:54:38] "GET / HTTP/1.1" 200 -
+2024-12-23 11:54:51,506 INFO __main__: Transcript generated successfully.
+2024-12-23 11:54:51,506 INFO __main__: Text processed successfully.
+2024-12-23 11:54:51,507 INFO __main__: Processing language: en
+2024-12-23 11:54:51,507 INFO __main__: Text translated successfully for language: en
+2024-12-23 12:02:54,068 INFO __main__: TTS generated successfully for language: en
+2024-12-23 12:02:54,080 DEBUG __main__: Enhanced audio files: []
+2024-12-23 12:02:54,080 DEBUG __main__: Audio durations: []
+2024-12-23 12:02:54,081 INFO werkzeug: ::1 - - [23/Dec/2024 12:02:54] "POST / HTTP/1.1" 200 -
+2024-12-23 12:18:56,191 INFO __main__: Transcript generated successfully.
+2024-12-23 12:18:56,191 INFO __main__: Text processed successfully.
+2024-12-23 12:18:56,192 INFO __main__: Processing language: en
+2024-12-23 12:18:56,192 INFO __main__: Text translated successfully for language: en
+2024-12-23 12:37:37,757 INFO __main__: TTS generated successfully for language: en
+2024-12-23 12:37:37,757 DEBUG __main__: Enhanced audio files: []
+2024-12-23 12:37:37,758 DEBUG __main__: Audio durations: []
+2024-12-23 12:37:37,759 INFO werkzeug: ::1 - - [23/Dec/2024 12:37:37] "POST / HTTP/1.1" 200 -

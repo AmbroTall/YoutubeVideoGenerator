@@ -71,8 +71,10 @@ def generate_tts(text, language):
 
     for i, chunk in enumerate(chunks):
         tts_output = os.path.join(language_output_dir, f"{language}_tts_output_{i}")
-        ref_audio = "/home/paolo/Desktop/YoutubeVideoGenerator-tts-batch/fish-speech/reference.wav"
-        ref_text = "/home/paolo/Desktop/YoutubeVideoGenerator-tts-batch/fish-speech/reference_text.txt"
+        ref_audio = os.path.join(base_dir,"app","fish-speech","reference.wav" )
+        ref_text = os.path.join(base_dir,"app","fish-speech","reference_text.txt" )
+        rate = 48000
+        channels = 2
         # Check if reference files exist
         if not os.path.exists(ref_audio):
             print(f"Reference audio file does not exist: {ref_audio}")
@@ -81,7 +83,7 @@ def generate_tts(text, language):
             print(f"Reference text file does not exist: {ref_text}")
             continue
 
-        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", ref_audio, "--reference_text", ref_text,"--rate" ,48000,"--channels", 2, "--normalize", "NORMALIZE","--temperature", 0.7, "--top_p", 0.9 ,"--streaming", "False", "--output", tts_output, "--format", "wav"]
+        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", ref_audio, "--reference_text", ref_text ,"--streaming", "False", "--output", tts_output, "--format", "wav"]
         print(f"Running command: {' '.join(command)}")
 
         try:
@@ -94,10 +96,10 @@ def generate_tts(text, language):
             print(f"Command error: {e.stderr}")
             continue
 
-        if os.path.exists(tts_output):
-            audio_files.append(tts_output)
-        else:
-            print(f"Error: TTS output not created for chunk {i} in language {language}")
+        # if os.path.exists(tts_output):
+        #     audio_files.append(tts_output)
+        # else:
+        #     print(f"Error: TTS output not created for chunk {i} in language {language}")
 
     if not audio_files:
         print(f"No audio files were generated for language {language}. Please check the TTS setup.")
@@ -128,7 +130,7 @@ def get_duration(file_path):
 
 
     
-def split_text_for_tts(text, max_chars=200):
+def split_text_for_tts(text, max_chars=1000):
     # Split text into segments based on commas and full stops
     # The regex will split at commas and periods, keeping the punctuation with the sentence
     sentences = re.split(r'(?<=[.!?])\s+', text)

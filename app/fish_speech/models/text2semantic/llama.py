@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 import torch
+print(torch.__version__)
 import torch.nn as nn
 from einops import rearrange
 from loguru import logger
