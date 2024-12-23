@@ -71,19 +71,37 @@ def generate_tts(text, language):
 
     for i, chunk in enumerate(chunks):
         tts_output = os.path.join(language_output_dir, f"{language}_tts_output_{i}")
-        ref_audio = os.path.join(base_dir,"app","fish-speech","reference.wav" )
-        ref_text = os.path.join(base_dir,"app","fish-speech","reference_text.txt" )
-        rate = 48000
-        channels = 2
-        # Check if reference files exist
-        if not os.path.exists(ref_audio):
-            print(f"Reference audio file does not exist: {ref_audio}")
-            continue
-        if not os.path.exists(ref_text):
-            print(f"Reference text file does not exist: {ref_text}")
-            continue
+        ref_audio_dir = os.path.join(base_dir,"app","reference_audio")
+        ref_text_dir = os.path.join(base_dir,"app","reference_audio")
 
-        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", ref_audio, "--reference_text", ref_text ,"--streaming", "False", "--output", tts_output, "--format", "wav"]
+        # Get all reference audio and text files
+        ref_audio_files = [
+            os.path.join(ref_audio_dir, f) for f in os.listdir(ref_audio_dir) if f.endswith(".mp3")
+        ]
+        ref_text_files = [
+            os.path.join(ref_text_dir, f) for f in os.listdir(ref_text_dir) if f.endswith(".txt")
+        ]
+
+        # Ensure there are references to process
+        if not ref_audio_files:
+            print(f"No reference audio files found in: {ref_audio_dir}")
+            exit(1)
+
+        if not ref_text_files:
+            print(f"No reference text files found in: {ref_text_dir}")
+            exit(1)
+
+        # Check for mismatched counts of audio and text files
+        if len(ref_audio_files) != len(ref_text_files):
+            print("Mismatch between number of reference audio and text files.")
+            exit(1)
+
+        # Prepare command arguments for multiple references
+        ref_audio_args = " ".join(ref_audio_files)
+        ref_text_args = " ".join(ref_text_files)
+
+
+        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", *ref_audio_files, "--reference_text", *ref_text_files,"--streaming", "False", "--output", tts_output, "--format", "wav"]
         print(f"Running command: {' '.join(command)}")
 
         try:
