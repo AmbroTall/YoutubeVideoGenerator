@@ -67,21 +67,22 @@ def generate_tts(text, language):
 
     chunks = split_text_for_tts(text)
     print(f'CHUNK ::{language}', chunks)
-    audio_files = []
 
+    # audio_files = []
+    
     for i, chunk in enumerate(chunks):
         tts_output = os.path.join(language_output_dir, f"{language}_tts_output_{i}")
         ref_audio_dir = os.path.join(base_dir,"app","reference_audio")
         ref_text_dir = os.path.join(base_dir,"app","reference_audio")
 
         # Get all reference audio and text files
-        ref_audio_files = [
+        ref_audio_files = sorted([
             os.path.join(ref_audio_dir, f) for f in os.listdir(ref_audio_dir) if f.endswith(".mp3")
-        ]
-        ref_text_files = [
-            os.path.join(ref_text_dir, f) for f in os.listdir(ref_text_dir) if f.endswith(".txt")
-        ]
+        ])
 
+        ref_text_files = sorted([
+            os.path.join(ref_text_dir, f) for f in os.listdir(ref_text_dir) if f.endswith(".txt")
+        ])
         # Ensure there are references to process
         if not ref_audio_files:
             print(f"No reference audio files found in: {ref_audio_dir}")
@@ -114,21 +115,21 @@ def generate_tts(text, language):
             print(f"Command error: {e.stderr}")
             continue
 
-        # if os.path.exists(tts_output):
-        #     audio_files.append(tts_output)
-        # else:
-        #     print(f"Error: TTS output not created for chunk {i} in language {language}")
-
+    # After generating TTS, check for existing files in the output directory
+    audio_files = [os.path.join(language_output_dir, f) for f in os.listdir(language_output_dir) if f.endswith(".wav")]
+    # audio_files.extend(existing_files) 
     if not audio_files:
         print(f"No audio files were generated for language {language}. Please check the TTS setup.")
         return [], [], []
-
+    
+    print("audio_files appended",audio_files)
     audio_durations = [get_duration(file) for file in audio_files]
     print('durations', audio_durations)
     return audio_files, audio_durations, chunks
 
 
 def get_duration(file_path):
+    print("audio_files path",file_path)
     """Get the duration of an audio or video file using ffprobe."""
     try:
         # Command to get the duration
