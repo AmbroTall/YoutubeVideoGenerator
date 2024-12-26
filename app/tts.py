@@ -102,7 +102,22 @@ def generate_tts(text, language):
         ref_text_args = " ".join(ref_text_files)
 
 
-        command = ["python3", "-m", "tools.api_client", "--text", chunk, "--reference_audio", *ref_audio_files, "--reference_text", *ref_text_files,"--streaming", "False", "--output", tts_output, "--format", "wav"]
+        command = ["python3", "-m", "tools.api_client", 
+                "--text", chunk, 
+                "--reference_audio", *ref_audio_files, 
+                "--reference_text", *ref_text_files,
+                "--streaming", "False", 
+                "--output", tts_output, 
+                "--format", "wav",
+                "--latency", "balanced", 
+                "--chunk_length", "200",
+                "--max_new_tokens","1024",
+                "--top_p", "0.7", 
+                "--repetition_penalty","1.2", 
+                "--temperature", "0.7",  
+                "--channels", "1", 
+                "--rate", "44100",  
+                "--seed","0",]
         print(f"Running command: {' '.join(command)}")
 
         try:
@@ -149,7 +164,7 @@ def get_duration(file_path):
 
 
     
-def split_text_for_tts(text, max_chars=1000):
+def split_text_for_tts(text, max_chars=100):
     # Split text into segments based on commas and full stops
     # The regex will split at commas and periods, keeping the punctuation with the sentence
     sentences = re.split(r'(?<=[.!?])\s+', text)

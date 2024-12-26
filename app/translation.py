@@ -17,7 +17,7 @@ load_dotenv()
 nltk.download('punkt', quiet=True)
 
 # Initialize the OpenAI client
-client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+client = OpenAI(api_key="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")
 
 # Define the model
 MODEL = "gpt-4o-mini"
