@@ -105,8 +105,8 @@ def generate_tts(text, language):
 
         command = ["python3", "-m", "tools.api_client", 
                 "--text", chunk, 
-                # "--reference_audio", *ref_audio_files, 
-                # "--reference_text", *ref_text_files,
+                "--reference_audio", *ref_audio_files, 
+                "--reference_text", *ref_text_files,
                  "--reference_id", reference_id, 
                 "--streaming", "False", 
                 "--output", tts_output, 

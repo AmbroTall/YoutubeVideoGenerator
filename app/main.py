@@ -59,7 +59,7 @@ def index():
 
         # Step 1: Transcribe
         try:
-            transcript = transcribe.transcribe_youtube_video(youtube_url)
+            # transcript = transcribe.transcribe_youtube_video(youtube_url)
             logger.info("Transcript generated successfully.")
         except Exception as e:
             logger.error("Error during transcription: %s", e)
@@ -67,7 +67,7 @@ def index():
 
         # Step 2: Process text
         try:
-            processed_text = text_processing.process_text(transcript)
+            # processed_text = text_processing.process_text(transcript)
             logger.info("Text processed successfully.")
         except Exception as e:
             logger.error("Error during text processing: %s", e)
@@ -79,13 +79,13 @@ def index():
                 logger.info("Processing language: %s", lang)
 
                 # Paraphrase the processed text
-                text = translation.paraphrase(processed_text)
+                # text = translation.paraphrase(processed_text)
 
                 # Translate text
-                translated_text = translation.translate_text(text, lang, config)
+                # translated_text = translation.translate_text(text, lang, config)
                 logger.info("Text translated successfully for language: %s", lang)
-                # with open('transcript', 'r') as file:
-                    # translated_text = file.read() 
+                with open('transcript', 'r') as file:
+                    translated_text = file.read() 
                 # Generate TTS
                 audio_files, audio_durations, chunks = tts.generate_tts(translated_text, lang)
                 logger.info("TTS generated successfully for language: %s", lang)
@@ -94,12 +94,12 @@ def index():
                 logger.debug("Audio durations: %s", audio_durations)
 
                 # Generate Thumbnail
-                thumbnail = thumbnail_generation.main(youtube_url, lang, config, k)
+                # thumbnail = thumbnail_generation.main(youtube_url, lang, config, k)
                 logger.info("Thumbnail generated successfully for language: %s", lang)
 
                 # Generate video
-                video_file = video_generation.generate_video(audio_files, audio_durations, chunks, config, lang, k)
-                logger.info("Video generated successfully for language: %s - File: %s", lang, video_file)
+                # video_file = video_generation.generate_video(audio_files, audio_durations, chunks, config, lang, k)
+                # logger.info("Video generated successfully for language: %s - File: %s", lang, video_file)
 
             except Exception as e:
                 logger.error("Error processing language %s: %s", lang, e, exc_info=True)
