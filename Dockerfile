@@ -31,6 +31,12 @@ RUN apt-get update && apt-get install -y \
     liblzma-dev \
     apt-transport-https \
     ca-certificates \
+    libsox-dev \
+    cmake \
+    libasound-dev \
+    portaudio19-dev \
+    libportaudio2 \
+    libportaudiocpp0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Git LFS
@@ -41,15 +47,13 @@ RUN curl https://pyenv.run | bash
 ENV PYENV_ROOT /root/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
-# Install Python 3.10
-RUN pyenv install 3.10
-RUN pyenv global 3.10
+# Install Python 3.12
+RUN pyenv install 3.12
+RUN pyenv global 3.12
 
 # Create virtual environment
-RUN pyenv virtualenv 3.10 env
+RUN pyenv virtualenv 3.12 env
 
-# Upgrade pip to the latest version
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pip && pip3 install --upgrade cython && pip3 install spacy==3.4.4"
 
 # Copy requirements files
 COPY requirements.txt ./
@@ -57,11 +61,12 @@ COPY requirements.txt ./
 # Install dependencies (use compatible versions)
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install -r requirements.txt"
 
+
 # Download all NLTK data to a central location (/usr/share/nltk_data)
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python -m nltk.downloader -d /usr/share/nltk_data all"
 
 # Install additional Python packages
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install flask-cors ffmpeg-python Pillow pydub resemble-enhance pydantic && pip install --upgrade TTS"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pydantic && pip install --upgrade pydantic torch torchaudio && pip install flask-cors ffmpeg-python pydub"
 
 # Install ImageMagick
 RUN apt-get update && apt-get install -y --fix-missing imagemagick
@@ -104,15 +109,14 @@ EXPOSE 80
 # Expose port 5500 for the Flask app
 EXPOSE 5500
 
-# Run the Flask app
-CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && python app/main.py"]
-
 # Expose port 8080 for the fish speech
 EXPOSE 8080          
 
-# Run the fish speech app
-CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && cd app && python3 -m tools.api_server \
-    --listen 0.0.0.0:8080 \
-    --llama-checkpoint-path "checkpoints/fish-speech-1.5" \
-    --decoder-checkpoint-path "checkpoints/fish-speech-1.5/firefly-gan-vq-fsq-8x1024-21hz-generator.pth" \
-    --decoder-config-name firefly_gan_vq"]
+# Copy the start script into the container
+COPY start.sh /app/start.sh
+
+# Make the start script executable
+RUN chmod +x /app/start.sh
+
+# Run the start script
+CMD ["/app/start.sh"]

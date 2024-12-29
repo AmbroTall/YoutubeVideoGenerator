@@ -3,16 +3,16 @@ import re
 import numpy as np
 import time
 import random
-from moviepy.editor import ImageClip, AudioFileClip, CompositeVideoClip,VideoFileClip, TextClip, concatenate_audioclips, concatenate_videoclips
+from moviepy import ImageClip, AudioFileClip, CompositeVideoClip,VideoFileClip, TextClip, concatenate_audioclips, concatenate_videoclips
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 import re
 import ffmpeg
 import shutil
 from thumbnail_generation import generate_thumbnail,main
 import subprocess
-from moviepy.config import change_settings
+# from moviepy.config import change_settings
 # Set the correct path to the ImageMagick binary
-change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
+# change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert"})
 base_dir = os.path.dirname(os.path.dirname(__file__)) 
 
 
