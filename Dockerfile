@@ -106,3 +106,13 @@ EXPOSE 5500
 
 # Run the Flask app
 CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && python app/main.py"]
+
+# Expose port 8080 for the fish speech
+EXPOSE 8080          
+
+# Run the fish speech app
+CMD ["/bin/bash", "-c", "source ~/.pyenv/versions/env/bin/activate && cd app && python3 -m tools.api_server \
+    --listen 0.0.0.0:8080 \
+    --llama-checkpoint-path "checkpoints/fish-speech-1.5" \
+    --decoder-checkpoint-path "checkpoints/fish-speech-1.5/firefly-gan-vq-fsq-8x1024-21hz-generator.pth" \
+    --decoder-config-name firefly_gan_vq"]
