@@ -1,5 +1,4 @@
 import os
-from TTS.api import TTS
 import ffmpeg
 import json
 import threading
