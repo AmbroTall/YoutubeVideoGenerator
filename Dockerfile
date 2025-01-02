@@ -59,14 +59,19 @@ RUN pyenv virtualenv 3.12 env
 COPY requirements.txt ./
 
 # Install dependencies (use compatible versions)
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install -r requirements.txt"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate &&  pip install pip==23.3.0 && pip install -r requirements.txt"
 
 
 # Download all NLTK data to a central location (/usr/share/nltk_data)
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python -m nltk.downloader -d /usr/share/nltk_data all"
 
 # Install additional Python packages
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pydantic && pip install --upgrade pydantic torch torchaudio && pip install flask-cors ffmpeg-python pydub"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pydantic && pip install --upgrade pydantic && pip install flask-cors ffmpeg-python pydub"
+
+# Install additional Python packages
+# RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && \
+#     pip3 install torch torchvision torchaudio"
+
 
 # Install ImageMagick
 RUN apt-get update && apt-get install -y --fix-missing imagemagick
@@ -96,7 +101,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install onnxruntime pyaudio"
 # Copy the current directory contents into the container at /app
 COPY . /app
 
