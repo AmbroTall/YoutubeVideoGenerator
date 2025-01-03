@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM nvidia/cuda:11.8.0-runtime-ubuntu20.04
+FROM nvidia/cuda:11.8.0-runtime-ubuntu22.04
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -59,7 +59,7 @@ RUN pyenv virtualenv 3.12 env
 COPY requirements.txt ./
 
 # Install dependencies (use compatible versions)
-RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate &&  pip install pip==23.3.0 && pip install -r requirements.txt"
+RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install -r requirements.txt"
 
 
 # Download all NLTK data to a central location (/usr/share/nltk_data)
