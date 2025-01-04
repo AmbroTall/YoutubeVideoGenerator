@@ -68,11 +68,6 @@ RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && python -m nltk.do
 # Install additional Python packages
 RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && pip install --upgrade pydantic && pip install --upgrade pydantic && pip install flask-cors ffmpeg-python pydub"
 
-# Install additional Python packages
-# RUN /bin/bash -c "source ~/.pyenv/versions/env/bin/activate && \
-#     pip3 install torch torchvision torchaudio"
-
-
 # Install ImageMagick
 RUN apt-get update && apt-get install -y --fix-missing imagemagick
 
